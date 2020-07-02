@@ -56,7 +56,7 @@ public class HiloAntiendeClientes extends Thread {
                         System.out.println(laIP + ": se ha desconectado...");
                         return;
                     }
-                } while (opcion < 1 || opcion > 5);
+                } while (opcion < 1 || opcion > 4);
 
                 switch (opcion) {
 
@@ -82,10 +82,11 @@ public class HiloAntiendeClientes extends Thread {
                         break;
 
                     case 4:
-                        bw.write("Desconectado.");
-                        bw.newLine();
-                        bw.flush();
-                    //System.exit(0);
+//                        bw.write("Desconectado.");
+//                        bw.newLine();
+//                        bw.flush();
+                        System.exit(0);
+                        break;
                 }
             }
         } catch (IOException ex) {
