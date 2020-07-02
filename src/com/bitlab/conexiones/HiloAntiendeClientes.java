@@ -29,7 +29,7 @@ public class HiloAntiendeClientes extends Thread {
     public void run() {
         
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader br= new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
             //Me da la ip a la cual el socket esta conectado
@@ -46,20 +46,23 @@ public class HiloAntiendeClientes extends Thread {
                     bw.write("---");
                     bw.newLine();
                     bw.flush();
-                    linea = br.readLine();
+                    linea = br.readLine(); //Lee lo que introduce el usuario
+                    log.info("Esperando respuesta del usuario");
                     opcion = Integer.parseInt(linea);
-                    if (opcion < 1 || opcion > 4) {
+                    if (opcion < 1 || opcion > 4) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                        log.info("Usuario selecciono una opcion no existente");
                         bw.write("Elige una opcion correcta.");
                         bw.newLine();
                         bw.flush();
-                    } else if (opcion == 4) {
+                    } else if (opcion == 4) { //Si ingresa la opcion 4 el usuario se desconectara
                         System.out.println(laIP + ": se ha desconectado...");
+                        log.info("Usuario desconectado del sistema");
                         return;
                     }
-                } while (opcion < 1 || opcion > 4);
+                } while (opcion < 1 || opcion > 4); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
 
+                log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
                 switch (opcion) {
-
                     case 1:
                             bw.write("Actualizando empleado prueba.");
                             bw.newLine();
@@ -82,11 +85,12 @@ public class HiloAntiendeClientes extends Thread {
                         break;
 
                     case 4:
-//                        bw.write("Desconectado.");
-//                        bw.newLine();
-//                        bw.flush();
+                        bw.write("Desconectado.");
+                        bw.newLine();
+                        bw.flush();
                         System.exit(0);
                         break;
+                    default: bw.write("Opcion invalida.");
                 }
             }
         } catch (IOException ex) {
