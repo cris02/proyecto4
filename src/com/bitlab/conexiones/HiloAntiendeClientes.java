@@ -19,7 +19,9 @@ import java.util.logging.Logger;
 public class HiloAntiendeClientes extends Thread {
 
     private static Logger log = Logger.getLogger(HiloAntiendeClientes.class.getName());
-    Socket socket;
+    private BufferedReader br;
+    private BufferedWriter bw;
+    private Socket socket;
 
     public HiloAntiendeClientes(Socket socket) {
         this.socket = socket;
@@ -29,8 +31,8 @@ public class HiloAntiendeClientes extends Thread {
     public void run() {
         
         try {
-            BufferedReader br= new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            br= new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
             //Me da la ip a la cual el socket esta conectado
             String laIP = socket.getInetAddress().getHostAddress();
@@ -86,8 +88,6 @@ public class HiloAntiendeClientes extends Thread {
 
                     case 4:
                         bw.write("Desconectado.");
-                        bw.newLine();
-                        bw.flush();
                         System.exit(0);
                         break;
                     default: bw.write("Opcion invalida.");
@@ -95,6 +95,17 @@ public class HiloAntiendeClientes extends Thread {
             }
         } catch (IOException ex) {
             Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                br.close();
+            } catch (IOException ex) {
+                Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
