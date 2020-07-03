@@ -6,42 +6,95 @@ package com.bitlab.entidades;
  * @author henry
  */
 public class DetallePlanilla {
-    private int idDetalle;
-    private String nombre;
-    private String descripcion;
+    //pojo detallePlanilla
+    
+    private int idDetallePlanilla;
+    private double descISSS;
+    private double descAFP;
+    private double descRenta;
+    private double totalPagar;
+    private byte diasLaborados;
+    private int idPlanilla;
+    
+    //constructores
 
     public DetallePlanilla() {
     }
 
-    public DetallePlanilla(int idDetalle, String nombre, String descripcion) {
-        this.idDetalle = idDetalle;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+    public DetallePlanilla(int idDetallePlanilla, double descISSS, double descAFP, double descRenta, double totalPagar, byte diasLaborados, int idPlanilla) {
+        this.idDetallePlanilla = idDetallePlanilla;
+        this.descISSS = descISSS;
+        this.descAFP = descAFP;
+        this.descRenta = descRenta;
+        this.totalPagar = totalPagar;
+        this.diasLaborados = diasLaborados;
+        this.idPlanilla = idPlanilla;
+    }
+    
+    
+    /*
+        Metodos Getter y Setter
+    */
+
+    public int getIdDetallePlanilla() {
+        return idDetallePlanilla;
     }
 
-    public int getIdDetalle() {
-        return idDetalle;
+    public void setIdDetallePlanilla(int idDetallePlanilla) {
+        this.idDetallePlanilla = idDetallePlanilla;
     }
 
-    public void setIdDetalle(int idDetalle) {
-        this.idDetalle = idDetalle;
+    public double getDescISSS() {
+        return descISSS;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setDescISSS(double descISSS) {
+        this.descISSS = descISSS;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public double getDescAFP() {
+        return descAFP;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public void setDescAFP(double descAFP) {
+        this.descAFP = descAFP;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public double getDescRenta() {
+        return descRenta;
     }
+
+    public void setDescRenta(double descRenta) {
+        this.descRenta = descRenta;
+    }
+
+    public double getTotalPagar() {
+        return totalPagar;
+    }
+
+    public void setTotalPagar(double totalPagar) {
+        this.totalPagar = totalPagar;
+    }
+
+    public byte getDiasLaborados() {
+        return diasLaborados;
+    }
+
+    public void setDiasLaborados(byte diasLaborados) {
+        this.diasLaborados = diasLaborados;
+    }
+
+    public int getIdPlanilla() {
+        return idPlanilla;
+    }
+
+    public void setIdPlanilla(int idPlanilla) {
+        this.idPlanilla = idPlanilla;
+    }
+    
+    
+
+  
     
     
 }

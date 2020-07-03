@@ -1,6 +1,8 @@
 
 package com.bitlab.entidades;
 
+import java.sql.Date;
+
 /**
  *
  * @author henry
@@ -8,18 +10,30 @@ package com.bitlab.entidades;
 public class Usuario {
     private int idUsuario;
     private String nombreUsuario;
-    private String contrasena;
     private String correo;
+    private String contrasena;
+    private boolean estatus; //ver si el usario esta activo o no
+    private Date fechaCreacion;
+    private Date ultimaConexio;
+    private int idRol;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nombreUsuario, String contrasena, String correo) {
+    public Usuario(int idUsuario, String nombreUsuario, String correo, String contrasena, boolean estatus, Date fechaCreacion, Date ultimaConexio, int idRol) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
         this.correo = correo;
+        this.contrasena = contrasena;
+        this.estatus = estatus;
+        this.fechaCreacion = fechaCreacion;
+        this.ultimaConexio = ultimaConexio;
+        this.idRol = idRol;
     }
+    
+    /*
+        Metodos Getter y Setter
+    */
 
     public int getIdUsuario() {
         return idUsuario;
@@ -37,6 +51,14 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public String getContrasena() {
         return contrasena;
     }
@@ -45,12 +67,36 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public String getCorreo() {
-        return correo;
+    public boolean isEstatus() {
+        return estatus;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEstatus(boolean estatus) {
+        this.estatus = estatus;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Date getUltimaConexio() {
+        return ultimaConexio;
+    }
+
+    public void setUltimaConexio(Date ultimaConexio) {
+        this.ultimaConexio = ultimaConexio;
+    }
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
     
     

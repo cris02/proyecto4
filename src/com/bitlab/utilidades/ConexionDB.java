@@ -22,17 +22,25 @@ public class ConexionDB {
     
     
     public Connection crearConexionDB(){
-        try { /*Se carga el archivo conexion.properties que contiene los datos de conexion a base de datos */
+        try { 
+            /*Se carga el archivo conexion.properties que contiene los datos de conexion a base de datos */
             prop.load(ConfigProperties.getResourceAsInputStream("conexion.properties"));
             log.info("Enviando peticion a la base de datos");            
             con = DriverManager.getConnection(encript.getTextoDesencriptado(prop.getProperty("dbUr")), encript.getTextoDesencriptado(prop.getProperty("dbNam")), encript.getTextoDesencriptado(prop.getProperty("dbPss")));
             log.info("Se ha realizado la conexion con la base de datos");
-        } catch (IOException ex) {
-            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (IOException | SQLException ex) {
             Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;
         /*Este metodo devuelve un objeto de tipo Connection, la conexion queda abierta por lo que hay que cerrarla en la clase donde se le llame */
+    }
+    
+    //metodo para cerra la conecion
+    public void cerrarConexion(Connection con) throws SQLException {
+        //comprobar si la conexion no es nula y que no este cerrada
+        log.info("Cerrando la conexion a la base de datos"); 
+        if (con != null && !con.isClosed()) {
+            con.close();
+        }
     }
 }
