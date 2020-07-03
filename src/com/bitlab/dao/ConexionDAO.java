@@ -76,14 +76,14 @@ public abstract class ConexionDAO<T> {
     }
 
     //metodo para manipular datos
-    public abstract List<T> getAllDate() throws ClassNotFoundException, SQLException;
+    public abstract List<T> obtenerDatos() throws ClassNotFoundException, SQLException;
     
-    public abstract T getByIDData(Object id) throws ClassNotFoundException, SQLException;
+    public abstract T obtenerDatoPorID(Object id) throws ClassNotFoundException, SQLException;
 
-    public abstract void insertDate(T entity) throws ClassNotFoundException, SQLException;
+    public abstract void insertarDatos(T entity) throws ClassNotFoundException, SQLException;
 
-    public abstract void updateDate(T entity) throws ClassNotFoundException, SQLException;
+    public abstract void actualizarDatos(T entity) throws ClassNotFoundException, SQLException;
 
-    public abstract void deleteDate(Object id) throws ClassNotFoundException, SQLException;
+    public abstract void eliminarDatos(Object id) throws ClassNotFoundException, SQLException;
 
 }
