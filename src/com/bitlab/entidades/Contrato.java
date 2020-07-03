@@ -18,6 +18,7 @@ public class Contrato {
     private String observacion;
     private boolean estatus;
     private String horario;
+    private String tipoPlaza; // temporal, fija, proyecto,pasantia
     private byte horasDia; //horas trabajadas al dia
     private byte diasLaborados; // dias laborados al mes
     private String formaPago; //el pago en efectivo, cheque, depositos, etc
@@ -30,7 +31,7 @@ public class Contrato {
     public Contrato() {
     }
 
-    public Contrato(int idContrato, String nombre, double salario, Date fechaInicioContrato, Date fechaFinContrato, String observacion, boolean estatus, String horario, byte horasDia, byte diasLaborados, String formaPago, String peridoPago, int idEmpleado, int idTipoPlaza) {
+    public Contrato(int idContrato, String nombre, double salario, Date fechaInicioContrato, Date fechaFinContrato, String observacion, boolean estatus, String horario, String tipoPlaza, byte horasDia, byte diasLaborados, String formaPago, String peridoPago, int idEmpleado, int idTipoPlaza) {
         this.idContrato = idContrato;
         this.nombre = nombre;
         this.salario = salario;
@@ -39,6 +40,7 @@ public class Contrato {
         this.observacion = observacion;
         this.estatus = estatus;
         this.horario = horario;
+        this.tipoPlaza = tipoPlaza;
         this.horasDia = horasDia;
         this.diasLaborados = diasLaborados;
         this.formaPago = formaPago;
@@ -163,6 +165,14 @@ public class Contrato {
 
     public void setIdTipoPlaza(int idTipoPlaza) {
         this.idTipoPlaza = idTipoPlaza;
+    }
+
+    public String getTipoPlaza() {
+        return tipoPlaza;
+    }
+
+    public void setTipoPlaza(String tipoPlaza) {
+        this.tipoPlaza = tipoPlaza;
     }
     
 }

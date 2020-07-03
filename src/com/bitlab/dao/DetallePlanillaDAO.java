@@ -6,8 +6,9 @@
 package com.bitlab.dao;
 
 import com.bitlab.entidades.DetallePlanilla;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -16,28 +17,35 @@ import java.util.List;
 public class DetallePlanillaDAO extends ConexionDAO<DetallePlanilla>{
 
     @Override
-    public List<DetallePlanilla> obtenerDatos() throws ClassNotFoundException, SQLException {
+    protected String obtenerNombreTabla() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public DetallePlanilla obtenerDatoPorID(Object id) throws ClassNotFoundException, SQLException {
+    protected String[] obtenerColumnas() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void insertarDatos(DetallePlanilla entity) throws ClassNotFoundException, SQLException {
+    protected String obtenerLLavePrimariaTabla() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void actualizarDatos(DetallePlanilla entity) throws ClassNotFoundException, SQLException {
+    protected DetallePlanilla getMappingResulsets(ResultSet rs) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void eliminarDatos(Object id) throws ClassNotFoundException, SQLException {
+    protected void getMappingParamsToInsert(PreparedStatement ps, DetallePlanilla entity) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    protected void setMappingUpdateStatement(PreparedStatement ps, DetallePlanilla entity) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
 }

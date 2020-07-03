@@ -6,8 +6,9 @@
 package com.bitlab.dao;
 
 import com.bitlab.entidades.Usuario;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -16,28 +17,34 @@ import java.util.List;
 public class UsuarioDAO extends ConexionDAO<Usuario>{
 
     @Override
-    public List<Usuario> obtenerDatos() throws ClassNotFoundException, SQLException {
+    protected String obtenerNombreTabla() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Usuario obtenerDatoPorID(Object id) throws ClassNotFoundException, SQLException {
+    protected String[] obtenerColumnas() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void insertarDatos(Usuario entity) throws ClassNotFoundException, SQLException {
+    protected String obtenerLLavePrimariaTabla() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void actualizarDatos(Usuario entity) throws ClassNotFoundException, SQLException {
+    protected Usuario getMappingResulsets(ResultSet rs) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void eliminarDatos(Object id) throws ClassNotFoundException, SQLException {
+    protected void getMappingParamsToInsert(PreparedStatement ps, Usuario entity) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    protected void setMappingUpdateStatement(PreparedStatement ps, Usuario entity) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }
