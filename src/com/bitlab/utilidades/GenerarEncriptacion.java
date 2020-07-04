@@ -17,11 +17,17 @@ public class GenerarEncriptacion {
         String privateData = "Cris09Ag$05.";
         encryptor.setPassword(privateData);
         
-        String textoEncriptado = encryptor.encrypt(""); //encriptamos la cadena
-        System.out.println("Texto encriptado: " + textoEncriptado);
+       //String textoEncriptado = encryptor.encrypt(""); //encriptamos la cadena
+        //System.out.println("Texto encriptado: " + textoEncriptado);
         
-        String textoDesincriptado = encryptor.decrypt(textoEncriptado);
-        System.out.println("Texto desencriptado: " + textoDesincriptado);
+//        String textoDesincriptado1 = encryptor.decrypt("sh15pmN5dguwzIDUTJ70HDu7qHDrsFTeIZ/QEOuxXDpPtHvEVBFUnmxEzAzrJOQ7");
+//        String textoDesincriptado2 = encryptor.decrypt("jpTG8tdAqE0tkUHt7ZhTiQ==");
+//        String textoDesincriptado3 = encryptor.decrypt("UaEEVHUmqtd2zwf0VNl71nY8rYwBtg9r");
+//        String textoDesincriptado4 = encryptor.decrypt("1LcPL3mSX9aEhoK7UDDJT3bW0cfCXCZak4InsZD6nEF5Pqp4+COdZA==");
+//        System.out.println("Texto desencriptado: " + textoDesincriptado1);
+//        System.out.println("Texto desencriptado: " + textoDesincriptado2);
+//        System.out.println("Texto desencriptado: " + textoDesincriptado3);
+//        System.out.println("Texto desencriptado: " + textoDesincriptado4);
     }
     
 }

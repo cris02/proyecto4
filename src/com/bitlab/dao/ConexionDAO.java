@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class ConexionDAO<T> {
 
-    ConexionDB conexionDB = new ConexionDB();
+    //ConexionDB conexionDB = new ConexionDB();
     public final short LIMIT_RECORDS = 10;
     public final String SQL_SELECT = "Select [CAMPOS] from [TABLA]";
     public final String SQL_INSERT = "insert into [TABLA] values([CAMPOS])";
@@ -32,7 +32,7 @@ public abstract class ConexionDAO<T> {
 
     //metodo para obtener la conecion
     protected Connection obtenerConexion() throws ClassNotFoundException, SQLException {
-        return conexionDB.crearConexionDB();
+        return ConexionDB.getInstance().crearConexionDB();
     }
 
     /*
@@ -40,14 +40,14 @@ public abstract class ConexionDAO<T> {
      */
     //cerrando la conexion
     protected void cerrarJDBCObjects(Connection con) throws SQLException {
-        conexionDB.cerrarConexion(con);
+        ConexionDB.cerrarConexion(con);
     }
 
     protected void cerrarJDBCObjects(Connection con, Statement st) throws SQLException {
         if (st != null && !st.isClosed()) {
             st.close();
         }
-        conexionDB.cerrarConexion(con);
+        ConexionDB.cerrarConexion(con);
     }
 
     //cerrando conexion y Statement
@@ -58,7 +58,7 @@ public abstract class ConexionDAO<T> {
         if (rs != null && !rs.isClosed()) {
             rs.close();
         }
-        conexionDB.cerrarConexion(con);
+        ConexionDB.cerrarConexion(con);
     }
 
     //cerrando conexion y PreparedStatement
@@ -67,7 +67,7 @@ public abstract class ConexionDAO<T> {
             ps.close();
         }
 
-        conexionDB.cerrarConexion(con);
+        ConexionDB.cerrarConexion(con);
     }
 
     //cerrando conexion, PreparedStatement y ResultSet
@@ -78,7 +78,7 @@ public abstract class ConexionDAO<T> {
         if (rs != null && !rs.isClosed()) {
             rs.close();
         }
-        conexionDB.cerrarConexion(con);
+        ConexionDB.cerrarConexion(con);
     }
 
     /*
@@ -193,11 +193,17 @@ public abstract class ConexionDAO<T> {
     //metodo para obtener la id de la tabla
     protected abstract String obtenerLLavePrimariaTabla();
 
-    //metodos abstractos
+    /*
+        metodos abstractos
+    */
+    
+    //metodo para mapear los resultados de una consulta
     protected abstract T getMappingResulsets(ResultSet rs) throws SQLException;
 
+    //metodo para mapear los resultados de un insert
     protected abstract void getMappingParamsToInsert(PreparedStatement ps, T entity) throws SQLException;
 
+    //metodo para mapear los resultados de un update
     protected abstract void setMappingUpdateStatement(PreparedStatement ps, T entity) throws SQLException;
 
 }
