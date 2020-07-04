@@ -160,10 +160,10 @@ public abstract class ConexionDAO<T> {
         String sql = SQL_INSERT;
         sql = sql.replace("[TABLA]", obtenerNombreTabla());
         String sqlColumnsIndicator = "";
-        for (int i = 0; i < obtenerColumnas().length; i++) {
+        for(int i = 0; i < obtenerColumnas().length; i++) {
             sqlColumnsIndicator += "?,";
         }
-        sqlColumnsIndicator = sqlColumnsIndicator.substring(0, sqlColumnsIndicator.length() - 2);
+        sqlColumnsIndicator = sqlColumnsIndicator.substring(0, sqlColumnsIndicator.length() - 1);
         sql = sql.replace("[CAMPOS]", sqlColumnsIndicator);
         System.out.println(sql);
         return sql;

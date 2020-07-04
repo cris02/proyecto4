@@ -2,6 +2,7 @@
 package com.bitlab.entidades;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -11,9 +12,9 @@ public class Empleado {
     private int idEmpleado;
     private String nombres;
     private String apellidos;
-    private char genero;
+    private String genero;
     private String documentoIdentidad;
-    private Date fechaNacimiento;
+    private Timestamp fechaNacimiento;
     private String correo;
     private String direccion;
     private String telefono;
@@ -24,10 +25,27 @@ public class Empleado {
     private int idRol;
     private int idDepartamento;
 
-    public Empleado() {
+    public Empleado(Object[] datos) {
+        for(int i=0; i<1; i++){
+            this.idEmpleado = (int) datos[0];
+            this.nombres = (String) datos[1];
+            this.apellidos = (String) datos[2];
+            this.genero = (String) datos[3];
+            this.documentoIdentidad = (String) datos[4];
+            this.fechaNacimiento = (Timestamp) datos[5];
+            this.correo = (String) datos[6];
+            this.direccion = (String) datos[7];
+            this.telefono = (String) datos[8];
+            this.nif = (String) datos[9];
+            this.comision = Double.parseDouble((String) datos[10]);
+            this.profesion = (String) datos[11];
+            this.estado = (boolean) datos[12];
+            this.idRol = (int) datos[13];
+            this.idDepartamento = (int) datos[14];
+        }
     }
 
-    public Empleado(int idEmpleado, String nombres, String apellidos, char genero, String documentoIdentidad, Date fechaNacimiento, String correo, String direccion, String telefono, String nif, double comision, String profesion, boolean estado, int idRol, int idDepartamento) {
+    public Empleado(int idEmpleado, String nombres, String apellidos, String genero, String documentoIdentidad, Timestamp fechaNacimiento, String correo, String direccion, String telefono, String nif, double comision, String profesion, boolean estado, int idRol, int idDepartamento) {
         this.idEmpleado = idEmpleado;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -75,11 +93,11 @@ public class Empleado {
         this.apellidos = apellidos;
     }
 
-    public char getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(char genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
@@ -91,11 +109,11 @@ public class Empleado {
         this.documentoIdentidad = documentoIdentidad;
     }
 
-    public Date getFechaNacimiento() {
+    public Timestamp getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(Timestamp fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
