@@ -46,6 +46,11 @@ public class ConexionDB {
             Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    //crea la instancia a la conexion de la base
+    public static ConexionDB getInstance() {
+        return main;
+    }
 
     //metodo que retorna la nueva conexion disponible
     public Connection crearConexionDB() throws ClassNotFoundException, SQLException {
@@ -64,7 +69,7 @@ public class ConexionDB {
     }
 
     //metodo para cerra la conecion
-    public void cerrarConexion(Connection con) throws SQLException {
+    public static void cerrarConexion(Connection con) throws SQLException {
         //comprobar si la conexion no es nula y que no este cerrada
         log.info("Cerrando la conexion a la base de datos");
         if (con != null && !con.isClosed()) {
