@@ -25,6 +25,7 @@ public class Empleado {
     private int idRol;
     private int idDepartamento;
 
+    //Contructor que recibira un arreglo de objetos
     public Empleado(Object[] datos) {
         for(int i=0; i<1; i++){
             this.idEmpleado = (int) datos[0];
