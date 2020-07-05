@@ -59,7 +59,15 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
 
     @Override
     protected void setMappingUpdateStatement(PreparedStatement ps, Usuario entity) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(1, entity.getIdUsuario());
+        ps.setString(2, entity.getNombreUsuario());
+        ps.setString(3, entity.getCorreo());
+        ps.setString(4, entity.getContrasena());
+        ps.setBoolean(5, entity.isEstatus());
+        ps.setDate(6, entity.getFechaCreacion());
+        ps.setDate(7, entity.getUltimaConexio());
+        ps.setInt(8, entity.getIdRol());
+        ps.setInt(9, entity.getIdUsuario());
     }
 
     

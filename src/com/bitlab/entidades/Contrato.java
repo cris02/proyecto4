@@ -18,20 +18,19 @@ public class Contrato {
     private String observacion;
     private boolean estatus;
     private String horario;
-    private String tipoPlaza; // temporal, fija, proyecto,pasantia
     private byte horasDia; //horas trabajadas al dia
     private byte diasLaborados; // dias laborados al mes
     private String formaPago; //el pago en efectivo, cheque, depositos, etc
     private String peridoPago; // pago semana, quincenal o mesual
+    private String tipoPlaza; // temporal, fija, proyecto,pasantia
     private int idEmpleado; //llave foranea
-    private int idTipoPlaza;
     
     //constructores
 
     public Contrato() {
     }
 
-    public Contrato(int idContrato, String nombre, double salario, Date fechaInicioContrato, Date fechaFinContrato, String observacion, boolean estatus, String horario, String tipoPlaza, byte horasDia, byte diasLaborados, String formaPago, String peridoPago, int idEmpleado, int idTipoPlaza) {
+    public Contrato(int idContrato, String nombre, double salario, Date fechaInicioContrato, Date fechaFinContrato, String observacion, boolean estatus, String horario, byte horasDia, byte diasLaborados, String formaPago, String peridoPago, String tipoPlaza, int idEmpleado) {
         this.idContrato = idContrato;
         this.nombre = nombre;
         this.salario = salario;
@@ -40,16 +39,13 @@ public class Contrato {
         this.observacion = observacion;
         this.estatus = estatus;
         this.horario = horario;
-        this.tipoPlaza = tipoPlaza;
         this.horasDia = horasDia;
         this.diasLaborados = diasLaborados;
         this.formaPago = formaPago;
         this.peridoPago = peridoPago;
+        this.tipoPlaza = tipoPlaza;
         this.idEmpleado = idEmpleado;
-        this.idTipoPlaza = idTipoPlaza;
     }
-    
-    
     
     /*
         Metodos Getter y Setter
@@ -151,22 +147,6 @@ public class Contrato {
         this.peridoPago = peridoPago;
     }
 
-    public int getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(int idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
-    public int getIdTipoPlaza() {
-        return idTipoPlaza;
-    }
-
-    public void setIdTipoPlaza(int idTipoPlaza) {
-        this.idTipoPlaza = idTipoPlaza;
-    }
-
     public String getTipoPlaza() {
         return tipoPlaza;
     }
@@ -174,5 +154,14 @@ public class Contrato {
     public void setTipoPlaza(String tipoPlaza) {
         this.tipoPlaza = tipoPlaza;
     }
+
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+    
     
 }
