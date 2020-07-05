@@ -58,7 +58,11 @@ public class Rol {
     public void setEstatus(boolean estatus) {
         this.estatus = estatus;
     }
-    
 
+    @Override
+    public String toString() {
+        return "\n-> ID_ROL = " + idRol + "\t NOMBRE DEL ROL = " + nombreRol + "\n";
+    }
+    
     
 }
