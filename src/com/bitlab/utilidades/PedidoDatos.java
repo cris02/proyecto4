@@ -2,8 +2,12 @@ package com.bitlab.utilidades;
 
 import com.bitlab.conexiones.HiloAntiendeClientes;
 import com.bitlab.dao.ConexionDAO;
+import com.bitlab.dao.DepartamentoDAO;
 import com.bitlab.dao.EmpleadoDAO;
+import com.bitlab.dao.RolDAO;
+import com.bitlab.entidades.Departamento;
 import com.bitlab.entidades.Empleado;
+import com.bitlab.entidades.Rol;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -34,11 +38,26 @@ public class PedidoDatos {
 
     //Metodo que recibe un BufferedWriter, BufferedReader, una lista de datos que se le solicitaran al usuario y
     // un arreglo con los tipos de datos que se espera recibir
-    public static List solicitarDatos(BufferedWriter bw, BufferedReader br, String[] ingresoDatos, String[] tipoDato) throws IOException {
+    public static List solicitarDatos(BufferedWriter bw, BufferedReader br, String[] ingresoDatos, String[] tipoDato) throws IOException, ClassNotFoundException, SQLException {
         List lista = new ArrayList();
+        RolDAO rolDao = new RolDAO();
+        DepartamentoDAO depDao = new DepartamentoDAO();
         for (int i = 0; i < ingresoDatos.length; i++) {
             bw.write(ingresoDatos[i]);  //Aqui pedira al usuario el ingreso de algun dato
             PedidoDatos.flush(bw);
+            if(ingresoDatos[i].equals("Ingrese rol del empleado")){
+                List<Rol> roles = rolDao.obtenerDatos();
+                for(Rol rol : roles){
+                    bw.write(rol.getIdRol() + ". " +rol.getNombreRol());
+                    PedidoDatos.flush(bw);
+                }
+            }else if(ingresoDatos[i].equals("Ingrese el departamento del empleado")){
+                List<Departamento> departamentos = depDao.obtenerDatos();
+                for(Departamento dep : departamentos){
+                    bw.write(dep.getIdDepartamento() + ". " + dep.getNombre());
+                    PedidoDatos.flush(bw);
+                }
+            }
             String respuesta = br.readLine(); //Aqui lee el dato ingresado por el usuario
             switch (tipoDato[i]) { //Dependiendo del tipo de dato se castea a su correspondiente tipo
                 case "int":

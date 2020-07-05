@@ -141,6 +141,14 @@ public abstract class ConexionDAO<T> {
         ps.execute();
         cerrarJDBCObjects(con, ps);
     }
+    
+    public void insertarDatoSinID(T entity) throws ClassNotFoundException, SQLException {
+        Connection con = obtenerConexion();
+        PreparedStatement ps = con.prepareStatement("INSERT INTO [TABLE] ([COLUMNS]) VALUES ([COLUMNS_INDEX])");
+        getMappingParamsToInsert(ps, entity);
+        ps.execute();
+        cerrarJDBCObjects(con, ps);
+    }
 
     //metodo para eliminar un dato de la base
     public void eliminarDato(Object id) throws ClassNotFoundException, SQLException {
@@ -196,7 +204,24 @@ public abstract class ConexionDAO<T> {
         log.info("Se genera el query insert " + sql);
         return sql;
     }
-
+    
+    //metodo para obtener le query insert
+    protected String obtenerInsertSQLSinID() {
+        String sql = "INSERT INTO [TABLE] ([COLUMNS]) VALUES ([COLUMNS_INDEX])";
+        String sqlColumnsIndicator = "";
+        for (int i = 0; i < obtenerColumnas().length; i++) 
+            sqlColumnsIndicator += "?,";
+        
+        sqlColumnsIndicator = sqlColumnsIndicator.substring(0, sqlColumnsIndicator.length() - 1);
+        sql = sql.replace(COLUMNA_INDEX, sqlColumnsIndicator);
+        
+        sql = sql.replace(TABLA, obtenerNombreTabla())
+                .replace(COLUMNAS, Arrays.toString(obtenerColumnas()))
+                .replace("[", "").replace("]", "");
+        System.out.println(sql); // prueba de como se arma la sentenccia sql
+        log.info("Se genera el query insert " + sql);
+        return sql;
+    }
     //metodo para obtener el query update
     protected String obtenerUpdateSQL() {
         String sql = SQL_UPDATE.replace(CONDICION, obtenerLLavePrimariaTabla() + SQL_PARAM);

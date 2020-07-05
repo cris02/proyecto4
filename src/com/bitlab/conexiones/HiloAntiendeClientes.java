@@ -234,10 +234,10 @@ public class HiloAntiendeClientes extends Thread {
                 switch (opcion) {
                     case 1:
                         List listaDatos;
-                        String datosSolicitar[] = {"Ingrese el ID del empleado:", "Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
+                        String datosSolicitar[] = {"Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
                             "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
                             "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
-                        String tiposDatos[] = {"int", "string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
+                        String tiposDatos[] = {"string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
                         listaDatos = PedidoDatos.solicitarDatos(bw, br, datosSolicitar, tiposDatos);
 
                         Empleado emp1 = new Empleado(listaDatos.toArray());

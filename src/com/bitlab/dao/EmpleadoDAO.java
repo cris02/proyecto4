@@ -32,7 +32,7 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
     //"EMP_ID_PK", 
     @Override
     protected String[] obtenerColumnas() {
-        String[] columnas = {"EMP_ID_PK", "EMP_NOMBRES", "EMP_APELLIDOS", "EMP_GENERO", "EMP_DOCUMENTO", "EMP_FECHA_NACIMIENTO",
+        String[] columnas = {"EMP_NOMBRES", "EMP_APELLIDOS", "EMP_GENERO", "EMP_DOCUMENTO", "EMP_FECHA_NACIMIENTO",
             "EMP_CORREO", "EMP_DIRECCION", "EMP_TELEFONO", "EMP_NIF", "EMP_COMISION", "EMP_PROFESION", "EMP_ESTADO", "ROL_ID_FK", "DEPT_ID_FK"};
         return columnas;
     }
@@ -66,43 +66,41 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
     @Override
     /* es get o set?*/
     protected void getMappingParamsToInsert(PreparedStatement ps, Empleado entity) throws SQLException {
-        ps.setInt(1, entity.getIdEmpleado());
-        ps.setString(2, entity.getNombres());
-        ps.setString(3, entity.getApellidos());
-        ps.setString(4, entity.getGenero());
-        ps.setString(5, entity.getDocumentoIdentidad());
-        ps.setTimestamp(6, entity.getFechaNacimiento());
-        ps.setString(7, entity.getCorreo());
-        ps.setString(8, entity.getDireccion());
-        ps.setString(9, entity.getTelefono());
-        ps.setString(10, entity.getNif());
-        ps.setDouble(11, entity.getComision());
-        ps.setString(12, entity.getProfesion());
-        ps.setBoolean(13, entity.isEstado());
+        ps.setString(1, entity.getNombres());
+        ps.setString(2, entity.getApellidos());
+        ps.setString(3, entity.getGenero());
+        ps.setString(4, entity.getDocumentoIdentidad());
+        ps.setTimestamp(5, entity.getFechaNacimiento());
+        ps.setString(6, entity.getCorreo());
+        ps.setString(7, entity.getDireccion());
+        ps.setString(8, entity.getTelefono());
+        ps.setString(9, entity.getNif());
+        ps.setDouble(10, entity.getComision());
+        ps.setString(11, entity.getProfesion());
+        ps.setBoolean(12, entity.isEstado());
         /* ARREGLAR ESTO CREO QUE SERIA BOOLEAN*/
-        ps.setInt(14, entity.getIdRol());
-        ps.setInt(15, entity.getIdDepartamento());
+        ps.setInt(13, entity.getIdRol());
+        ps.setInt(14, entity.getIdDepartamento());
     }
 
     @Override
     protected void setMappingUpdateStatement(PreparedStatement ps, Empleado entity) throws SQLException {
-        ps.setInt(1, entity.getIdEmpleado());
-        ps.setString(2, entity.getNombres());
-        ps.setString(3, entity.getApellidos());
-        ps.setString(4, entity.getGenero());
-        ps.setString(5, entity.getDocumentoIdentidad());
-        ps.setTimestamp(6, entity.getFechaNacimiento());
-        ps.setString(7, entity.getCorreo());
-        ps.setString(8, entity.getDireccion());
-        ps.setString(9, entity.getTelefono());
-        ps.setString(10, entity.getNif());
-        ps.setDouble(11, entity.getComision());
-        ps.setString(12, entity.getProfesion());
-        ps.setBoolean(13, entity.isEstado());
+        ps.setString(1, entity.getNombres());
+        ps.setString(2, entity.getApellidos());
+        ps.setString(3, entity.getGenero());
+        ps.setString(4, entity.getDocumentoIdentidad());
+        ps.setTimestamp(5, entity.getFechaNacimiento());
+        ps.setString(6, entity.getCorreo());
+        ps.setString(7, entity.getDireccion());
+        ps.setString(8, entity.getTelefono());
+        ps.setString(9, entity.getNif());
+        ps.setDouble(10, entity.getComision());
+        ps.setString(11, entity.getProfesion());
+        ps.setBoolean(12, entity.isEstado());
         /* ARREGLAR ESTO CREO QUE SERIA BOOLEAN*/
-        ps.setInt(14, entity.getIdRol());
-        ps.setInt(15, entity.getIdDepartamento());
-        ps.setInt(16, entity.getIdEmpleado());
+        ps.setInt(13, entity.getIdRol());
+        ps.setInt(14, entity.getIdDepartamento());
+        ps.setInt(15, entity.getIdEmpleado());
     }
 
     public void seteaDato(short num, Empleado entity, String datoActualizar) {
