@@ -179,7 +179,6 @@ public abstract class ConexionDAO<T> {
     //metodo para obtener le query insert
     protected String obtenerInsertSQL() {
         String sql = SQL_INSERT;
-        //sql = sql.replace("[TABLA]", obtenerNombreTabla());
         String sqlColumnsIndicator = "";
         for (int i = 0; i < obtenerColumnas().length; i++) 
             sqlColumnsIndicator += "?,";

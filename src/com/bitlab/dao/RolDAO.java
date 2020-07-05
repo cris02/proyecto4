@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * @author Aguilar
  */
-public class RolDAO extends ConexionDAO<Rol>{
+public class RolDAO extends ConexionDAO<Rol> {
 
     @Override
     protected String obtenerNombreTabla() {
@@ -23,7 +23,7 @@ public class RolDAO extends ConexionDAO<Rol>{
 
     @Override
     protected String[] obtenerColumnas() {
-        String[] str = {"ROL_ID_PK","ROL_NOMBREROL","ROL_DESCRIPCION","ROL_ESTATUS"};
+        String[] str = {"ROL_ID_PK", "ROL_NOMBREROL", "ROL_DESCRIPCION", "ROL_ESTATUS"};
         return str;
     }
 
@@ -34,26 +34,28 @@ public class RolDAO extends ConexionDAO<Rol>{
 
     @Override
     protected Rol getMappingResulsets(ResultSet rs) throws SQLException {
-        return ( new Rol(
-                        rs.getInt("ROL_ID_PK"), 
-                        rs.getString("ROL_NOMBREROL"), 
-                        rs.getString("ROL_DESCRIPCION"), 
-                        rs.getBoolean("ROL_ESTATUS")));
+        return (new Rol(
+                rs.getInt("ROL_ID_PK"),
+                rs.getString("ROL_NOMBREROL"),
+                rs.getString("ROL_DESCRIPCION"),
+                rs.getBoolean("ROL_ESTATUS")));
     }
 
     @Override
     protected void getMappingParamsToInsert(PreparedStatement ps, Rol entity) throws SQLException {
-        ps.setInt(      1, entity.getIdRol());
-        ps.setString(   2, entity.getNombreRol());
-        ps.setString(   3, entity.getDescripcion());
-        ps.setBoolean(  4, entity.isEstatus());
+        ps.setInt(1, entity.getIdRol());
+        ps.setString(2, entity.getNombreRol());
+        ps.setString(3, entity.getDescripcion());
+        ps.setBoolean(4, entity.isEstatus());
     }
 
     @Override
     protected void setMappingUpdateStatement(PreparedStatement ps, Rol entity) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(1, entity.getIdRol());
+        ps.setString(2, entity.getNombreRol());
+        ps.setString(3, entity.getDescripcion());
+        ps.setBoolean(4, entity.isEstatus());
+        ps.setInt(5, entity.getIdRol());
     }
-    
-    
-    
+
 }
