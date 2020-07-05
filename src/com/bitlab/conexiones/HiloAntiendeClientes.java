@@ -2,6 +2,7 @@ package com.bitlab.conexiones;
 
 import com.bitlab.dao.ConexionDAO;
 import com.bitlab.dao.EmpleadoDAO;
+import com.bitlab.dao.UsuarioDAO;
 import com.bitlab.entidades.Empleado;
 import com.bitlab.entidades.Usuario;
 import com.bitlab.propiedades.ConfigProperties;
@@ -50,11 +51,12 @@ public class HiloAntiendeClientes extends Thread {
             System.out.println(laIP + ": se ha conectado...");
 
             /* Empieza prueba */
-            Usuario us = new Usuario();
-            us.setNombreUsuario("henjo");
-            us.setContrasena("prueba");
-            us.setCorreo("henry.callejas@gmail.com");
-            us.setIdUsuario(1);
+            UsuarioDAO daoUsuario = new UsuarioDAO();
+//            Usuario us = new Usuario();
+//            us.setNombreUsuario("henjo");
+//            us.setContrasena("prueba");
+//            us.setCorreo("henry.callejas@gmail.com");
+//            us.setIdUsuario(1);
 
             bw.write("Ingrese su usuario");
             bw.newLine();
@@ -65,6 +67,8 @@ public class HiloAntiendeClientes extends Thread {
             bw.newLine();
             bw.flush();
             String contra = br.readLine();
+            
+            Usuario us = daoUsuario.verificarUsuario(usuario, contra);
 
             if (usuario.equals(us.getNombreUsuario()) && contra.equals(us.getContrasena())) {
                 try {
@@ -73,12 +77,12 @@ public class HiloAntiendeClientes extends Thread {
                     e.printStackTrace();
                 }
                 bw.write("FUNCIONA!!!!\n");
-                if (us.getIdUsuario() == 0) {
+                if (us.getIdUsuario() == 2) {
                     bw.write("Usted es un usuario administrador\n");
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
                     menuAdmin(br, bw);
-                } else {
-                    bw.write("Usted es un usuario normal\n");
+                } else if(us.getIdUsuario() == 3) {
+                    bw.write("Usted es un usuario de RRHH\n");
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
                     menuRRHH(br, bw);
                 }
@@ -88,6 +92,10 @@ public class HiloAntiendeClientes extends Thread {
 
             /* *Termina prueba */
         } catch (IOException ex) {
+            Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -218,6 +226,10 @@ public class HiloAntiendeClientes extends Thread {
                         bw.write("Ingrese el ID del usuario que desea actualizar datos ");
                         bw.newLine();
                         bw.flush();
+                        List listaEmpleados;
+                        dao = new EmpleadoDAO();
+                        listaEmpleados = dao.obtenerEmpleadosActivos();
+                        dao.mostrarEmpleadosActivos(bw, listaEmpleados);
                         String datoId = br.readLine();
                         int id = Integer.parseInt(datoId);
                         //ENVIAR EL ID 
@@ -236,10 +248,10 @@ public class HiloAntiendeClientes extends Thread {
                         bw.write("Que empleado desea retirar de la base de datos de empleados activos");
                         PedidoDatos.flush(bw);
                         
-                        List listaEmpleados;
+                        List listaEmp;
                         dao = new EmpleadoDAO();
-                        listaEmpleados = dao.obtenerEmpleadosActivos();
-                        Empleado emp = dao.mostrarEmpleadosActivos(bw, listaEmpleados);
+                        listaEmp = dao.obtenerEmpleadosActivos();
+                        Empleado emp = dao.mostrarEmpleadosActivos(bw, listaEmp);
                         String idDesactivar = br.readLine();
                         dao.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
                         break;
