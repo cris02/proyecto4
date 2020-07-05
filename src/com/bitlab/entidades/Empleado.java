@@ -63,7 +63,15 @@ public class Empleado {
         this.idDepartamento = idDepartamento;
     }
     
-    
+    public Empleado(){
+        
+    }
+
+    public Empleado(int idEmpleado, String nombres, String apellidos) {
+        this.idEmpleado = idEmpleado;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+    }
 
     /*
          Metodos Getter y Setter
@@ -187,6 +195,11 @@ public class Empleado {
 
     public void setIdDepartamento(int idDepartamento) {
         this.idDepartamento = idDepartamento;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado{" + "idEmpleado=" + idEmpleado + ", nombres=" + nombres + ", apellidos=" + apellidos + ", genero=" + genero + ", documentoIdentidad=" + documentoIdentidad + ", fechaNacimiento=" + fechaNacimiento + ", correo=" + correo + ", direccion=" + direccion + ", telefono=" + telefono + ", nif=" + nif + ", comision=" + comision + ", profesion=" + profesion + ", estado=" + estado + ", idRol=" + idRol + ", idDepartamento=" + idDepartamento + '}';
     }
     
     
