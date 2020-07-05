@@ -40,7 +40,7 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
     @Override
     protected Departamento getMappingResulsets(ResultSet rs) throws SQLException {
         return (new Departamento(
-                rs.getInt("ROL_ID_PK"),
+                rs.getInt("DEPT_ID_PK"),
                 rs.getString("DEPT_NOMBRE"),
                 rs.getString("DEPT_DESCRIPCION"),
                 rs.getDouble("DEPT_PRESUPUESTO"),
