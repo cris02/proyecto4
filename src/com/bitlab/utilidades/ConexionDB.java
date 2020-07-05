@@ -22,15 +22,16 @@ public class ConexionDB {
     Properties prop = new Properties();
 
     //configuracion pool conexiones
-    public final String URL = encript.getTextoDesencriptado(prop.getProperty("dbUr"));
-    public final String USER = encript.getTextoDesencriptado(prop.getProperty("dbNam"));
-    public final String PASSWORD = encript.getTextoDesencriptado(prop.getProperty("dbPss"));
-    public final String DRIVER = encript.getTextoDesencriptado(prop.getProperty("dbDri"));
+    
     private static final ConexionDB main = new ConexionDB(); //aplicando el patron singleton
     private BasicDataSource basicDataSource;
 
     //definir el constructor de la conexion
     private ConexionDB() {
+        String URL = encript.getTextoDesencriptado(prop.getProperty("dbUr"));
+    String USER = encript.getTextoDesencriptado(prop.getProperty("dbNam"));
+    String PASSWORD = encript.getTextoDesencriptado(prop.getProperty("dbPss"));
+    String DRIVER = encript.getTextoDesencriptado(prop.getProperty("dbDri"));
         try {
             prop.load(ConfigProperties.getResourceAsInputStream("conexion.properties"));
             log.info("Cargamos las propiedades de conexion de la base de datos");
