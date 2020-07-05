@@ -23,8 +23,14 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
 
     @Override
     protected String[] obtenerColumnas() {
-        String[] str = {"DEPT_ID_PK", "DEPT_NOMBRE", "DEPT_DESCRIPCION", "DEPT_PRESUPUESTO", "DEPT_VACANTES_REQUERIDAS", "DEPT_VACANTE_DISPONIBLE", "DEPT_ESTADO"};
-        return str;
+
+        String[] columnas = {"DEPT_ID_PK", "DEPT_NOMBRE", "DEPT_DESCRIPCION", "DEPT_PRESUPUESTO", "DEPT_VACANTES_REQUERIDAS", "DEPT_VACANTE_DISPONIBLE", "DEPT_ESTADO"};
+        return columnas;
+    }
+    
+    public String[] obtenerDepartamentos(){
+        String[] departamentos = {""};
+        return departamentos;
     }
 
     @Override
@@ -34,14 +40,15 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
 
     @Override
     protected Departamento getMappingResulsets(ResultSet rs) throws SQLException {
-        return (new Departamento(
-                rs.getInt("ROL_ID_PK"),
+
+        return new Departamento(
+                rs.getInt("DEPT_ID_PK"),
                 rs.getString("DEPT_NOMBRE"),
                 rs.getString("DEPT_DESCRIPCION"),
                 rs.getDouble("DEPT_PRESUPUESTO"),
                 rs.getShort("DEPT_VACANTES_REQUERIDAS"),
                 rs.getShort("DEPT_VACANTE_DISPONIBLE"),
-                rs.getBoolean("DEPT_ESTADO")));
+                rs.getBoolean("DEPT_ESTADO"));
     }
 
     @Override
@@ -65,6 +72,12 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
         ps.setShort(6, entity.getVacantesDisponibles());
         ps.setBoolean(7, entity.isEstado());
         ps.setInt(8, entity.getIdDepartamento());
+
+    }
+
+    @Override
+    public void actualizarDatos(Departamento entity) throws ClassNotFoundException, SQLException {
+        super.actualizarDatos(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

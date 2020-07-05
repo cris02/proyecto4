@@ -5,7 +5,9 @@
  */
 package com.bitlab.dao;
 
+import com.bitlab.entidades.Empleado;
 import com.bitlab.entidades.Usuario;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,6 +71,35 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
         ps.setInt(8, entity.getIdRol());
         ps.setInt(9, entity.getIdUsuario());
     }
+    
+    public Usuario verificarUsuario(String nombreUsuario, String contrasena) throws SQLException, ClassNotFoundException{
+        String SQL = "SELECT USU_ID_PK, USU_NOMBRE, USU_CORREO, USU_CONTRASENA, ROL_ID_FK FROM BIT_USUARIO WHERE USU_NOMBRE=? AND USU_CONTRASENA=?";
+        
+        
+        Connection con = obtenerConexion();
+        PreparedStatement ps =con.prepareStatement(SQL);
+        ps.setString(1, nombreUsuario);
+        ps.setString(2, contrasena);
+        
+        ResultSet rs = ps.executeQuery();
+        Usuario us = new Usuario();
+        while (rs.next()) {
+            us.setIdUsuario(rs.getInt("USU_ID_PK"));
+            us.setNombreUsuario(rs.getString("USU_NOMBRE"));
+            us.setCorreo(rs.getString("USU_CORREO"));
+            us.setContrasena(rs.getString("USU_CONTRASENA"));
+            us.setIdRol(rs.getInt("ROL_ID_FK"));
+        }
+        return us;
+        
+//        return new Usuario(
+//                rs.getString("USU_NOMBRE"),
+//                rs.getString("USU_CORREO"),
+//                rs.getString("USU_CONTRASENA"),
+//                rs.getInt("ROL_ID_FK")
+//        );
+    }
 
+    
     
 }

@@ -130,6 +130,8 @@ public abstract class ConexionDAO<T> {
         cerrarJDBCObjects(con, ps, rs);
         return e;
     }
+    
+    
 
     //metodo para insertar datos
     public void insertarDato(T entity) throws ClassNotFoundException, SQLException {
