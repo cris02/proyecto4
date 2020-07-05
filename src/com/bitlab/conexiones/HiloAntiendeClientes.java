@@ -78,7 +78,6 @@ public class HiloAntiendeClientes extends Thread {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                bw.write("FUNCIONA!!!!\n");
                 if (us.getIdUsuario() == 2) {
                     bw.write( us.getNombreUsuario()+ " Usted es un usuario administrador\n");
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
@@ -199,11 +198,11 @@ public class HiloAntiendeClientes extends Thread {
     }
 
     public void menuRRHH(BufferedReader br, BufferedWriter bw) throws IOException {
-        EmpleadoDAO dao = null;
+        EmpleadoDAO daoEmp = null;
         while (true) {
             try {
                 log.info("Cliente entra al menu principal");
-                bw.write("1. Contratación de empleados\n2. Actualización de datos del empleado\n3. Desactivación de empleados por despido\n4. Salir");
+                bw.write("1. Contratación de empleados\n2. Actualización de datos del empleado\n3. Desactivación de empleados por despido\n4. Ver empleados activos\n5. Salir");
                 bw.newLine();
                 int opcion = 0;
                 String linea;
@@ -214,17 +213,17 @@ public class HiloAntiendeClientes extends Thread {
                     linea = br.readLine(); //Lee lo que introduce el usuario
                     log.info("Esperando respuesta del usuario");
                     opcion = Integer.parseInt(linea);
-                    if (opcion < 1 || opcion > 4) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                    if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
                         log.info("Usuario selecciono una opcion no existente");
                         bw.write("Elige una opcion correcta.");
                         bw.newLine();
                         bw.flush();
-                    } else if (opcion == 4) { //Si ingresa la opcion 4 el usuario se desconectara
+                    } else if (opcion == 5) { //Si ingresa la opcion 5 el usuario se desconectara
 //                    System.out.println(laIP + ": se ha desconectado...");
                         log.info("Usuario desconectado del sistema");
                         return;
                     }
-                } while (opcion < 1 || opcion > 4); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
+                } while (opcion < 1 || opcion > 5); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
 
                 log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
                 switch (opcion) {
@@ -239,8 +238,8 @@ public class HiloAntiendeClientes extends Thread {
                         Empleado emp1 = new Empleado(listaDatos.toArray());
 
 //                        Empleado emp = new Empleado(ID, nombre, apellido, genero, DUI, timestamp, correo, direccion, telefono, NIF, com, profesion, estado, rol, departamento);
-                        dao = new EmpleadoDAO();
-                        dao.insertarDato(emp1);
+                        daoEmp = new EmpleadoDAO();
+                        daoEmp.insertarDato(emp1);
 
                         break;
 
@@ -253,9 +252,9 @@ public class HiloAntiendeClientes extends Thread {
                         bw.newLine();
                         bw.flush();
                         List listaEmpleados;
-                        dao = new EmpleadoDAO();
-                        listaEmpleados = dao.obtenerEmpleadosActivos();
-                        dao.mostrarEmpleadosActivos(bw, listaEmpleados);
+                        daoEmp = new EmpleadoDAO();
+                        listaEmpleados = daoEmp.obtenerEmpleadosActivos();
+                        daoEmp.mostrarEmpleadosActivos(bw, listaEmpleados);
                         String datoId = br.readLine();
                         int id = Integer.parseInt(datoId);
                         //ENVIAR EL ID 
@@ -275,23 +274,30 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         
                         List listaEmp;
-                        dao = new EmpleadoDAO();
-                        listaEmp = dao.obtenerEmpleadosActivos();
-                        Empleado emp = dao.mostrarEmpleadosActivos(bw, listaEmp);
+                        daoEmp = new EmpleadoDAO();
+                        listaEmp = daoEmp.obtenerEmpleadosActivos();
+                        Empleado emp = daoEmp.mostrarEmpleadosActivos(bw, listaEmp);
                         String idDesactivar = br.readLine();
-                        dao.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
+                        daoEmp.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
                         break;
 
-                    case 4:
-                        bw.write("Desconectado.");
-                        System.exit(0);
+                    case 4: bw.write("Lista de empleados activos de BitLab");
+                            PedidoDatos.flush(bw);
+//                            List list=null;
+                        daoEmp = new EmpleadoDAO();
+                        listaEmp = daoEmp.obtenerEmpleadosActivos();
+                        daoEmp.mostrarEmpleadosActivos(bw, listaEmp);
+                        bw.write("-------------------------------");
+                        PedidoDatos.flush(bw);
+                        
                         break;
+                    case 5: bw.write("Desconectado.");
+                            System.exit(0);
+                            break;
                     default:
                         bw.write("Opcion invalida.");
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
+            } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
