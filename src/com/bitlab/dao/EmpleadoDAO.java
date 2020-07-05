@@ -173,7 +173,7 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         Connection con = obtenerConexion();
 
         PreparedStatement ps = con.prepareStatement("UPDATE BIT_EMPLEADO SET EMP_ESTADO=? WHERE EMP_ID_PK=?");
-        ps.setShort(1, (short) 1);
+        ps.setShort(1, (short) 0);
         ps.setInt(2, (short) id);
         ps.executeUpdate();
         cerrarJDBCObjects(con, ps);
