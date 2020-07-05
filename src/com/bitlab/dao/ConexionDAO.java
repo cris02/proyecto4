@@ -5,6 +5,7 @@
  */
 package com.bitlab.dao;
 
+import com.bitlab.entidades.Empleado;
 import com.bitlab.utilidades.ConexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -151,6 +152,7 @@ public abstract class ConexionDAO<T> {
 
     //metodo para actualizar un dato en la base de datos
     public void actualizarDatos(T entity) throws ClassNotFoundException, SQLException {
+        log.info("Actualizando datos en la base de datos");
         Connection con = obtenerConexion();
         PreparedStatement ps = con.prepareStatement(obtenerUpdateSQL());
         setMappingUpdateStatement(ps, entity);

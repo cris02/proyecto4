@@ -165,6 +165,7 @@ public class HiloAntiendeClientes extends Thread {
     }
 
     public void menuRRHH(BufferedReader br, BufferedWriter bw) throws IOException {
+        EmpleadoDAO dao = null;
         while (true) {
             try {
                 log.info("Cliente entra al menu principal");
@@ -204,27 +205,43 @@ public class HiloAntiendeClientes extends Thread {
                         Empleado emp1 = new Empleado(listaDatos.toArray());
 
 //                        Empleado emp = new Empleado(ID, nombre, apellido, genero, DUI, timestamp, correo, direccion, telefono, NIF, com, profesion, estado, rol, departamento);
-                        EmpleadoDAO dao = new EmpleadoDAO();
+                        dao = new EmpleadoDAO();
                         dao.insertarDato(emp1);
 
                         break;
 
                     case 2:
+                        PedidoDatos pedirDato = new PedidoDatos();
                         bw.write("Actualización de datos del empleado. ");
                         bw.newLine();
                         bw.flush();
-                        List lista;
-                        String datosaSolicitar[] = {"Ingrese el ID del empleado:", "Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
-                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
-                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
-                        String tiposDeDatos[] = {"int", "string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
+                        bw.write("Ingrese el ID del usuario que desea actualizar datos ");
+                        bw.newLine();
+                        bw.flush();
+                        String datoId = br.readLine();
+                        int id = Integer.parseInt(datoId);
+                        //ENVIAR EL ID 
+                        pedirDato.menuActualiza(bw, br, id);
+//                        List lista;
+//                        String datosaSolicitar[] = {"Ingrese el ID del empleado:", "Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
+//                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
+//                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
+//                        String tiposDeDatos[] = {"int", "string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
                         break;
 
                     case 3:
 
                         bw.write("Desactivación de empleados por despido");
-                        bw.newLine();
-                        bw.flush();
+                        PedidoDatos.flush(bw);
+                        bw.write("Que empleado desea retirar de la base de datos de empleados activos");
+                        PedidoDatos.flush(bw);
+                        
+                        List listaEmpleados;
+                        dao = new EmpleadoDAO();
+                        listaEmpleados = dao.obtenerEmpleadosActivos();
+                        Empleado emp = dao.mostrarEmpleadosActivos(bw, listaEmpleados);
+                        String idDesactivar = br.readLine();
+                        dao.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
                         break;
 
                     case 4:

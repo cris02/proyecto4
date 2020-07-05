@@ -3,8 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+
             <file>file:/C:/Users/crist/OneDrive/Documents/NetBeansProjects/Modulo%20Basico%20BitLab/proyecto4/src/com/bitlab/dao/RolDAO.java</file>
             <file>file:/C:/Users/crist/OneDrive/Documents/NetBeansProjects/Modulo%20Basico%20BitLab/proyecto4/src/com/bitlab/dao/ConexionDAO.java</file>
+
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/conexiones/HiloAntiendeClientes.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/entidades/Empleado.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/conexiones/Servidor.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/dao/EmpleadoDAO.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/utilidades/PedidoDatos.java</file>
+
         </group>
     </open-files>
 </project-private>
