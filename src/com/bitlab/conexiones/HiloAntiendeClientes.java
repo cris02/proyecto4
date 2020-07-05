@@ -186,42 +186,47 @@ public class HiloAntiendeClientes extends Thread {
                         bw.flush();
                     } else if (opcion == 4) { //Si ingresa la opcion 4 el usuario se desconectara
 //                    System.out.println(laIP + ": se ha desconectado...");
-log.info("Usuario desconectado del sistema");
-return;
+                        log.info("Usuario desconectado del sistema");
+                        return;
                     }
                 } while (opcion < 1 || opcion > 4); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
-                
+
                 log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
                 switch (opcion) {
                     case 1:
                         List listaDatos;
                         String datosSolicitar[] = {"Ingrese el ID del empleado:", "Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
-                        "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado", 
-                        "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
+                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
+                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
                         String tiposDatos[] = {"int", "string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
-                        listaDatos = solicitarDatos(bw, br, datosSolicitar, tiposDatos);
-                        
+                        listaDatos = PedidoDatos.solicitarDatos(bw, br, datosSolicitar, tiposDatos);
+
                         Empleado emp1 = new Empleado(listaDatos.toArray());
-                        
+
 //                        Empleado emp = new Empleado(ID, nombre, apellido, genero, DUI, timestamp, correo, direccion, telefono, NIF, com, profesion, estado, rol, departamento);
                         EmpleadoDAO dao = new EmpleadoDAO();
                         dao.insertarDato(emp1);
-                        
+
                         break;
-                        
+
                     case 2:
-                        bw.write("de empleados por despido. ");
+                        bw.write("Actualización de datos del empleado. ");
                         bw.newLine();
                         bw.flush();
+                        List lista;
+                        String datosaSolicitar[] = {"Ingrese el ID del empleado:", "Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
+                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
+                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
+                        String tiposDeDatos[] = {"int", "string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
                         break;
-                        
+
                     case 3:
-                        
-                        bw.write("Contratando empleados prueba.");
+
+                        bw.write("Desactivación de empleados por despido");
                         bw.newLine();
                         bw.flush();
                         break;
-                        
+
                     case 4:
                         bw.write("Desconectado.");
                         System.exit(0);
@@ -235,40 +240,6 @@ return;
                 Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-    
-    /*Metodo que vacía el flujo de salida */
-    private static void flush(BufferedWriter bw) throws IOException{
-        bw.newLine(); 
-        bw.flush();
-    }
-    
-    //Metodo que recibe un BufferedWriter, BufferedReader, una lista de datos que se le solicitaran al usuario y
-    // un arreglo con los tipos de datos que se espera recibir
-    private List solicitarDatos(BufferedWriter bw, BufferedReader br, String[] ingresoDatos, String[] tipoDato) throws IOException{
-        List lista = new ArrayList();
-        for(int i=0; i<ingresoDatos.length; i++){
-            bw.write(ingresoDatos[i]);  //Aqui pedira al usuario el ingreso de algun dato
-            HiloAntiendeClientes.flush(bw);
-            String respuesta = br.readLine(); //Aqui lee el dato ingresado por el usuario
-            switch(tipoDato[i]){ //Dependiendo del tipo de dato se castea a su correspondiente tipo
-                case "int": int entero = Integer.parseInt(respuesta);
-                            lista.add(entero);
-                break;
-                case "double": Double doble = Double.parseDouble(respuesta);
-                             lista.add(doble);
-                break;
-                case "boolean": Boolean boleano = Boolean.parseBoolean(respuesta);
-                             lista.add(boleano);
-                break;
-                case "timestamp": Date d = new Date(respuesta);
-                                  Timestamp timestamp = new Timestamp(d.getTime());
-                                  lista.add(timestamp);
-                break;
-                case "string": lista.add(respuesta); //Si es string no se castea, ya que readLine devuelve un string
-            }
-        }
-        return lista; //Se devuelve la lista de datos ingresados por el usuario
     }
 
 }
