@@ -18,27 +18,35 @@ public class RolDAO extends ConexionDAO<Rol>{
 
     @Override
     protected String obtenerNombreTabla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "BIT_ROL";
     }
 
     @Override
     protected String[] obtenerColumnas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] str = {"ROL_ID_PK","ROL_NOMBREROL","ROL_DESCRIPCION","ROL_ESTATUS"};
+        return str;
     }
 
     @Override
     protected String obtenerLLavePrimariaTabla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "ROL_ID_PK";
     }
 
     @Override
     protected Rol getMappingResulsets(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return ( new Rol(
+                        rs.getInt("ROL_ID_PK"), 
+                        rs.getString("ROL_NOMBREROL"), 
+                        rs.getString("ROL_DESCRIPCION"), 
+                        rs.getBoolean("ROL_ESTATUS")));
     }
 
     @Override
     protected void getMappingParamsToInsert(PreparedStatement ps, Rol entity) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(      1, entity.getIdRol());
+        ps.setString(   2, entity.getNombreRol());
+        ps.setString(   3, entity.getDescripcion());
+        ps.setBoolean(  4, entity.isEstatus());
     }
 
     @Override
