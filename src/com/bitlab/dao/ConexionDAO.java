@@ -131,30 +131,6 @@ public abstract class ConexionDAO<T> {
         cerrarJDBCObjects(con, ps, rs);
         return e;
     }
-    
-    public Empleado obtenerEmpleado(int id) throws ClassNotFoundException, SQLException{
-        Connection con = obtenerConexion();
-        ResultSet rs = con.createStatement().executeQuery("SELECT * FROM BIT_EMPLEADO WHERE EMP_ID_PK =" +id);
-        Empleado emp = new Empleado();
-        while(rs.next()){
-            emp.setIdEmpleado(rs.getInt("EMP_ID_PK"));
-            emp.setNombres(rs.getString("EMP_NOMBRES"));
-            emp.setApellidos(rs.getString("EMP_APELLIDOS"));
-            emp.setGenero(rs.getString("EMP_GENERO"));
-            emp.setDocumentoIdentidad(rs.getString("EMP_DOCUMENTO"));
-            emp.setFechaNacimiento(rs.getTimestamp("EMP_FECHA_NACIMIENTO"));
-            emp.setCorreo(rs.getString("EMP_CORREO"));
-            emp.setDireccion(rs.getString("EMP_DIRECCION"));
-            emp.setTelefono(rs.getString("EMP_TELEFONO"));
-            emp.setNif(rs.getString("EMP_NIF"));
-            emp.setComision(rs.getDouble("EMP_COMISION"));
-            emp.setProfesion(rs.getString("EMP_PROFESION"));
-            emp.setEstado(rs.getBoolean("EMP_ESTADO"));
-            emp.setIdRol(rs.getInt("ROL_ID_FK"));
-            emp.setIdDepartamento(rs.getInt("DEPT_ID_FK"));
-        }
-        return emp;
-    }
 
     //metodo para insertar datos
     public void insertarDato(T entity) throws ClassNotFoundException, SQLException {
@@ -234,18 +210,6 @@ public abstract class ConexionDAO<T> {
         System.out.println(sql); //prueba del query
         log.info("Se genera el Query update " + sql);
         return sql;
-    }
-    
-    protected void desactivaEmpleado(short id, Empleado entity) throws ClassNotFoundException, SQLException{
-        Connection con = obtenerConexion();
-        
-        PreparedStatement ps = con.prepareStatement("UPDATE BIT_EMPLEADO SET EMP_ESTADO=? WHERE EMP_ID_PK=?");
-        ps.setShort(1, (short)0);
-        ps.setInt(2, (short) id);
-        ps.executeUpdate();
-        cerrarJDBCObjects(con, ps);
-//        entity.setIdEmpleado(id);
-//        insertarDato(entity);
     }
 
     //metodos para obtener el nombre de la tabla

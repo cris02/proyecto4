@@ -235,16 +235,11 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         bw.write("Que empleado desea retirar de la base de datos de empleados activos");
                         PedidoDatos.flush(bw);
+                        
                         List listaEmpleados;
                         dao = new EmpleadoDAO();
                         listaEmpleados = dao.obtenerEmpleadosActivos();
-                        Empleado emp=null;
-                        
-                        for(Object obj : listaEmpleados){
-                            emp = (Empleado) obj;
-                            bw.write(emp.getIdEmpleado() +". " +emp.getNombres() + " " +emp.getApellidos());
-                            PedidoDatos.flush(bw);
-                        }
+                        Empleado emp = dao.mostrarEmpleadosActivos(bw, listaEmpleados);
                         String idDesactivar = br.readLine();
                         dao.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
                         break;
