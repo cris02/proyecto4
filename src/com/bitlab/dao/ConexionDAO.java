@@ -5,7 +5,6 @@
  */
 package com.bitlab.dao;
 
-import com.bitlab.entidades.Empleado;
 import com.bitlab.utilidades.ConexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

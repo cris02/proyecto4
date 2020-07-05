@@ -18,27 +18,43 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
 
     @Override
     protected String obtenerNombreTabla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "BIT_USUARIO";
     }
 
     @Override
     protected String[] obtenerColumnas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] str = {"USU_ID_PK", "USU_NOMBRE", "USU_CORREO", "USU_CONTRASENA", "USU_ESTATUS", "USU_FECHA_CREACION", "USU_FECHA_CONEXION", "ROL_ID_FK"};
+        return str;
     }
 
     @Override
     protected String obtenerLLavePrimariaTabla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "USU_ID_PK";
     }
 
     @Override
     protected Usuario getMappingResulsets(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (new Usuario(
+                rs.getInt("USU_ID_PK"),
+                rs.getString("USU_NOMBRE"),
+                rs.getString("USU_CORREO"),
+                rs.getString("USU_CONTRASENA"),
+                rs.getBoolean("USU_ESTATUS"),
+                rs.getDate("USU_FECHA_CREACION"),
+                rs.getDate("USU_FECHA_CONEXION"),
+                rs.getInt("ROL_ID_FK")));
     }
 
     @Override
     protected void getMappingParamsToInsert(PreparedStatement ps, Usuario entity) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(1, entity.getIdUsuario());
+        ps.setString(2, entity.getNombreUsuario());
+        ps.setString(3, entity.getCorreo());
+        ps.setString(4, entity.getContrasena());
+        ps.setBoolean(5, entity.isEstatus());
+        ps.setDate(6, entity.getFechaCreacion());
+        ps.setDate(7, entity.getUltimaConexio());
+        ps.setInt(8, entity.getIdRol());
     }
 
     @Override
