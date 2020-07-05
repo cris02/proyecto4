@@ -14,38 +14,54 @@ import java.sql.SQLException;
  *
  * @author Aguilar
  */
-public class PlanillaDAO extends ConexionDAO<Planilla>{
+public class PlanillaDAO extends ConexionDAO<Planilla> {
 
     @Override
     protected String obtenerNombreTabla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "BIT_PLANILLA";
     }
 
     @Override
     protected String[] obtenerColumnas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String[] str = {"PLA_ID_PK", "PLA_NOMBRE", "PLA_OBSERVACION", "PLA_FECHA_INICIO", "PLA_FECHA_FIN", "PLA_RESPONSABLE"};
+        return str;
     }
 
     @Override
     protected String obtenerLLavePrimariaTabla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "PLA_ID_PK";
     }
 
     @Override
     protected Planilla getMappingResulsets(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (new Planilla(
+                rs.getInt("PLA_ID_PK"),
+                rs.getString("PLA_NOMBRE"),
+                rs.getString("PLA_OBSERVACION"),
+                rs.getDate("PLA_FECHA_INICIO"),
+                rs.getDate("PLA_FECHA_FIN"),
+                rs.getString("PLA_RESPONSABLE")));
     }
 
     @Override
     protected void getMappingParamsToInsert(PreparedStatement ps, Planilla entity) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(1, entity.getIdPlanilla());
+        ps.setString(2, entity.getNombre());
+        ps.setString(3, entity.getObservaciones());
+        ps.setDate(4, entity.getFechaInicio());
+        ps.setDate(5, entity.getFechaFin());
+        ps.setString(6, entity.getResponsable());
     }
 
     @Override
     protected void setMappingUpdateStatement(PreparedStatement ps, Planilla entity) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ps.setInt(1, entity.getIdPlanilla());
+        ps.setString(2, entity.getNombre());
+        ps.setString(3, entity.getObservaciones());
+        ps.setDate(4, entity.getFechaInicio());
+        ps.setDate(5, entity.getFechaFin());
+        ps.setString(6, entity.getResponsable());
+        ps.setInt(7, entity.getIdPlanilla());
     }
 
-    
-    
 }
