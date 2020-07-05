@@ -76,7 +76,5 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
     public void actualizarDatos(Departamento entity) throws ClassNotFoundException, SQLException {
         super.actualizarDatos(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
 }
