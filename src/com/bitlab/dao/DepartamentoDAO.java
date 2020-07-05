@@ -23,8 +23,9 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
 
     @Override
     protected String[] obtenerColumnas() {
-        String[] str = {"DEPT_ID_PK", "DEPT_NOMBRE", "DEPT_DESCRIPCION", "DEPT_PRESUPUESTO", "DEPT_VACANTES_REQUERIDAS", "DEPT_VACANTE_DISPONIBLE", "DEPT_ESTADO"};
-        return str;
+
+        String[] columnas = {"DEPT_ID_PK", "DEPT_NOMBRE", "DEPT_DESCRIPCION", "DEPT_PRESUPUESTO", "DEPT_VACANTES_REQUERIDAS", "DEPT_VACANTE_DISPONIBLE", "DEPT_ESTADO"};
+        return columnas;
     }
     
     public String[] obtenerDepartamentos(){
@@ -39,14 +40,15 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
 
     @Override
     protected Departamento getMappingResulsets(ResultSet rs) throws SQLException {
-        return (new Departamento(
+
+        return new Departamento(
                 rs.getInt("DEPT_ID_PK"),
                 rs.getString("DEPT_NOMBRE"),
                 rs.getString("DEPT_DESCRIPCION"),
                 rs.getDouble("DEPT_PRESUPUESTO"),
                 rs.getShort("DEPT_VACANTES_REQUERIDAS"),
                 rs.getShort("DEPT_VACANTE_DISPONIBLE"),
-                rs.getBoolean("DEPT_ESTADO")));
+                rs.getBoolean("DEPT_ESTADO"));
     }
 
     @Override

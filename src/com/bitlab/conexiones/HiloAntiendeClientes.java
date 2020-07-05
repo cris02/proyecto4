@@ -135,7 +135,7 @@ public class HiloAntiendeClientes extends Thread {
         DepartamentoDAO daoDept = new DepartamentoDAO();
         while (true) {
             log.info("Admin entra al menu principal");
-            bw.write("1. Gestión de departamentos\n2. Gestión de estados de empleados\n3. Gestión de usuarios\n4. Salir");
+            bw.write("1. Gestión de departamentos\n2. Gestión de estados de empleados\n3. Gestión de usuarios\n4. Gestión de Roles\n5. Salir");
             bw.newLine();
             int opcion = 0;
             String linea;
@@ -146,17 +146,17 @@ public class HiloAntiendeClientes extends Thread {
                 linea = br.readLine(); //Lee lo que introduce el usuario
                 log.info("Esperando respuesta del usuario");
                 opcion = Integer.parseInt(linea);
-                if (opcion < 1 || opcion > 4) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
                     log.info("Usuario selecciono una opcion no existente");
                     bw.write("Elige una opcion correcta.");
                     bw.newLine();
                     bw.flush();
-                } else if (opcion == 4) { //Si ingresa la opcion 4 el usuario se desconectara
+                } else if (opcion == 5) { //Si ingresa la opcion 4 el usuario se desconectara
 //                        System.out.println(laIP + ": se ha desconectado...");
                     log.info("Usuario desconectado del sistema");
                     return;
                 }
-            } while (opcion < 1 || opcion > 4); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
+            } while (opcion < 1 || opcion > 5); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
 
             log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
             switch (opcion) {
@@ -182,12 +182,17 @@ public class HiloAntiendeClientes extends Thread {
 
                 case 3:
 
-                    bw.write("Contratando empleados prueba.");
+                    bw.write("Gestion de Usuarios");
                     bw.newLine();
                     bw.flush();
                     break;
 
                 case 4:
+                    bw.write("Gestion de Roles");
+                    System.exit(0);
+                    break;
+                
+                case 5:
                     bw.write("Desconectado.");
                     System.exit(0);
                     break;

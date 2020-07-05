@@ -22,4 +22,18 @@ public class Validaciones {
         }
     }
 
+    //metodo para validar el correo
+    public boolean validarCorreo(String correo) {
+        boolean dato;
+        correo.toLowerCase();
+
+        if (!correo.matches("[\\w\\-.]+@{1}([\\w-]+\\.)+[\\w-\\.]+")) { //regla para validar el correo
+            System.out.println("\n\nNo es un correo valido, por favor ingrese un nuevo correo\n");
+            dato = false;
+        } else {
+            dato = true;
+        }
+        return dato;
+    }
+
 }
