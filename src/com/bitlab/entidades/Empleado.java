@@ -27,21 +27,20 @@ public class Empleado {
 
     public Empleado(Object[] datos) {
         for(int i=0; i<1; i++){
-            this.idEmpleado = (int) datos[0];
-            this.nombres = (String) datos[1];
-            this.apellidos = (String) datos[2];
-            this.genero = (String) datos[3];
-            this.documentoIdentidad = (String) datos[4];
-            this.fechaNacimiento = (Timestamp) datos[5];
-            this.correo = (String) datos[6];
-            this.direccion = (String) datos[7];
-            this.telefono = (String) datos[8];
-            this.nif = (String) datos[9];
-            this.comision = Double.parseDouble((String) datos[10]);
-            this.profesion = (String) datos[11];
-            this.estado = (boolean) datos[12];
-            this.idRol = (int) datos[13];
-            this.idDepartamento = (int) datos[14];
+            this.nombres = (String) datos[0];
+            this.apellidos = (String) datos[1];
+            this.genero = (String) datos[2];
+            this.documentoIdentidad = (String) datos[3];
+            this.fechaNacimiento = (Timestamp) datos[4];
+            this.correo = (String) datos[5];
+            this.direccion = (String) datos[6];
+            this.telefono = (String) datos[7];
+            this.nif = (String) datos[8];
+            this.comision = Double.parseDouble((String) datos[9]);
+            this.profesion = (String) datos[10];
+            this.estado = (boolean) datos[11];
+            this.idRol = (int) datos[12];
+            this.idDepartamento = (int) datos[13];
         }
     }
 

@@ -9,6 +9,7 @@ import com.bitlab.entidades.Rol;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -57,5 +58,12 @@ public class RolDAO extends ConexionDAO<Rol> {
         ps.setBoolean(4, entity.isEstatus());
         ps.setInt(5, entity.getIdRol());
     }
+
+    @Override
+    public List<Rol> obtenerDatos() throws ClassNotFoundException, SQLException {
+        return super.obtenerDatos(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }

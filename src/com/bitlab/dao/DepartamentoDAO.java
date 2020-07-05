@@ -72,7 +72,6 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
         ps.setShort(6, entity.getVacantesDisponibles());
         ps.setBoolean(7, entity.isEstado());
         ps.setInt(8, entity.getIdDepartamento());
-
     }
 
     @Override
