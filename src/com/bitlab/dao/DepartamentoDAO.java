@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * @author Aguilar
  */
-public class DepartamentoDAO extends ConexionDAO<Departamento>{
+public class DepartamentoDAO extends ConexionDAO<Departamento> {
 
     @Override
     protected String obtenerNombreTabla() {
@@ -46,8 +46,7 @@ public class DepartamentoDAO extends ConexionDAO<Departamento>{
                 rs.getDouble("DEPT_PRESUPUESTO"),
                 rs.getShort("DEPT_VACANTES_REQUERIDAS"),
                 rs.getShort("DEPT_VACANTE_DISPONIBLE"),
-                rs.getBoolean("DEPT_ESTADO")
-        );
+                rs.getBoolean("DEPT_ESTADO"));
     }
 
     @Override
@@ -70,15 +69,12 @@ public class DepartamentoDAO extends ConexionDAO<Departamento>{
         ps.setShort(5, entity.getVacantesRequeridas());
         ps.setShort(6, entity.getVacantesDisponibles());
         ps.setBoolean(7, entity.isEstado());
-        ps.setInt(1, entity.getIdDepartamento());
+        ps.setInt(8, entity.getIdDepartamento());
     }
 
     @Override
     public void actualizarDatos(Departamento entity) throws ClassNotFoundException, SQLException {
         super.actualizarDatos(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
-    
 }

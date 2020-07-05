@@ -25,8 +25,8 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
 
     @Override
     protected String[] obtenerColumnas() {
-        String[] columnas = {"USU_ID_PK", "USU_NOMBRE", "USU_CORREO", "USU_CONTRASENA", "USU_ESTATUS", "USU_FECHA_CREACION", "USU_FECHA_CONEXION", "ROL_ID_FK"};
-        return columnas;
+        String[] str = {"USU_ID_PK", "USU_NOMBRE", "USU_CORREO", "USU_CONTRASENA", "USU_ESTATUS", "USU_FECHA_CREACION", "USU_FECHA_CONEXION", "ROL_ID_FK"};
+        return str;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
 
     @Override
     protected Usuario getMappingResulsets(ResultSet rs) throws SQLException {
-        return new Usuario(
+        return (new Usuario(
                 rs.getInt("USU_ID_PK"),
                 rs.getString("USU_NOMBRE"),
                 rs.getString("USU_CORREO"),
@@ -44,8 +44,7 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
                 rs.getBoolean("USU_ESTATUS"),
                 rs.getDate("USU_FECHA_CREACION"),
                 rs.getDate("USU_FECHA_CONEXION"),
-                rs.getInt("ROL_ID_FK")
-        );
+                rs.getInt("ROL_ID_FK")));
     }
 
     @Override

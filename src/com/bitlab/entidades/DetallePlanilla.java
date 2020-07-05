@@ -15,13 +15,14 @@ public class DetallePlanilla {
     private double totalPagar;
     private byte diasLaborados;
     private int idPlanilla;
+    private int idContrato;
     
     //constructores
 
     public DetallePlanilla() {
     }
 
-    public DetallePlanilla(int idDetallePlanilla, double descISSS, double descAFP, double descRenta, double totalPagar, byte diasLaborados, int idPlanilla) {
+    public DetallePlanilla(int idDetallePlanilla, double descISSS, double descAFP, double descRenta, double totalPagar, byte diasLaborados, int idPlanilla, int idContrato) {
         this.idDetallePlanilla = idDetallePlanilla;
         this.descISSS = descISSS;
         this.descAFP = descAFP;
@@ -29,9 +30,9 @@ public class DetallePlanilla {
         this.totalPagar = totalPagar;
         this.diasLaborados = diasLaborados;
         this.idPlanilla = idPlanilla;
+        this.idContrato = idContrato;
     }
-    
-    
+      
     /*
         Metodos Getter y Setter
     */
@@ -91,10 +92,14 @@ public class DetallePlanilla {
     public void setIdPlanilla(int idPlanilla) {
         this.idPlanilla = idPlanilla;
     }
-    
-    
 
-  
-    
+    public int getIdContrato() {
+        return idContrato;
+    }
+
+    public void setIdContrato(int idContrato) {
+        this.idContrato = idContrato;
+    }
+
     
 }
