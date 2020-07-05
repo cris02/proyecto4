@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * @author henry
  */
 public class HiloAntiendeClientes extends Thread {
-
+//Rama actualizacion
     private static Logger log = Logger.getLogger(HiloAntiendeClientes.class.getName());
     EnvioCorreo envio = new EnvioCorreo();
     Properties prop = new Properties();
