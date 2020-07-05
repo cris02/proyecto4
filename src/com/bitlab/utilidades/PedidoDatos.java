@@ -96,5 +96,10 @@ public class PedidoDatos {
             Logger.getLogger(PedidoDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void opcionesAdmin(String tabla, BufferedWriter bw, BufferedReader br, Object dao) throws IOException{
+        bw.write("Que " + tabla + " desea gestionar?");
+        
+    }
 
 }

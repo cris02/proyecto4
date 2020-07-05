@@ -1,8 +1,10 @@
 package com.bitlab.conexiones;
 
 import com.bitlab.dao.ConexionDAO;
+import com.bitlab.dao.DepartamentoDAO;
 import com.bitlab.dao.EmpleadoDAO;
 import com.bitlab.dao.UsuarioDAO;
+import com.bitlab.entidades.Departamento;
 import com.bitlab.entidades.Empleado;
 import com.bitlab.entidades.Usuario;
 import com.bitlab.propiedades.ConfigProperties;
@@ -78,13 +80,28 @@ public class HiloAntiendeClientes extends Thread {
                 }
                 bw.write("FUNCIONA!!!!\n");
                 if (us.getIdUsuario() == 2) {
-                    bw.write("Usted es un usuario administrador\n");
+                    bw.write( us.getNombreUsuario()+ " Usted es un usuario administrador\n");
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
-                    menuAdmin(br, bw);
+//                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
+//                    PedidoDatos.flush(bw);
+//                    String codigoIngresado = br.readLine();
+//                    if(codigo == Integer.parseInt(codigoIngresado)){
+                        menuAdmin(br, bw);
+//                    }else{
+//                        bw.write("Codigo ingresado es invalido");
+//                    }
+                    
                 } else if(us.getIdUsuario() == 3) {
                     bw.write("Usted es un usuario de RRHH\n");
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
-                    menuRRHH(br, bw);
+//                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
+//                    PedidoDatos.flush(bw);
+//                    String codigoIngresado = br.readLine();
+//                    if(codigo == Integer.parseInt(codigoIngresado)){
+                        menuRRHH(br, bw);
+//                    }else{
+//                        bw.write("Codigo ingresado es invalido");
+//                    }
                 }
             } else {
                 bw.write("Credenciales invalidas, intente de nuevo, por seguridad se desconectara del sistema");
@@ -115,7 +132,8 @@ public class HiloAntiendeClientes extends Thread {
 
     }
 
-    public void menuAdmin(BufferedReader br, BufferedWriter bw) throws IOException {
+    public void menuAdmin(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
+        DepartamentoDAO daoDept = new DepartamentoDAO();
         while (true) {
             log.info("Admin entra al menu principal");
             bw.write("1. Gestión de departamentos\n2. Gestión de estados de empleados\n3. Gestión de usuarios\n4. Salir");
@@ -145,8 +163,16 @@ public class HiloAntiendeClientes extends Thread {
             switch (opcion) {
                 case 1:
                     bw.write("Gestión de departamentos prueba.");
-                    bw.newLine();
-                    bw.flush();
+                    PedidoDatos.flush(bw);
+                    bw.write("Que departamento desea gestionar");
+                    PedidoDatos.flush(bw);
+                    List <Departamento> listaDept= daoDept.obtenerDatos();
+                    for(Departamento dep : listaDept){
+                        bw.write(dep.getIdDepartamento() + ". " +dep.getNombre());
+                        PedidoDatos.flush(bw);
+                    }
+                    bw.write("Funcionalidad aun no completada");
+                    PedidoDatos.flush(bw);
                     break;
 
                 case 2:

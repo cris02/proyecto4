@@ -26,6 +26,11 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
         String[] str = {"DEPT_ID_PK", "DEPT_NOMBRE", "DEPT_DESCRIPCION", "DEPT_PRESUPUESTO", "DEPT_VACANTES_REQUERIDAS", "DEPT_VACANTE_DISPONIBLE", "DEPT_ESTADO"};
         return str;
     }
+    
+    public String[] obtenerDepartamentos(){
+        String[] departamentos = {""};
+        return departamentos;
+    }
 
     @Override
     protected String obtenerLLavePrimariaTabla() {
@@ -66,5 +71,12 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
         ps.setBoolean(7, entity.isEstado());
         ps.setInt(8, entity.getIdDepartamento());
     }
+
+    @Override
+    public void actualizarDatos(Departamento entity) throws ClassNotFoundException, SQLException {
+        super.actualizarDatos(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }
