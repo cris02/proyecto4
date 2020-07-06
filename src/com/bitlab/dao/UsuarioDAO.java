@@ -5,12 +5,14 @@
  */
 package com.bitlab.dao;
 
-import com.bitlab.entidades.Empleado;
 import com.bitlab.entidades.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -70,6 +72,24 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
         ps.setDate(7, entity.getUltimaConexio());
         ps.setInt(8, entity.getIdRol());
         ps.setInt(9, entity.getIdUsuario());
+    }
+    
+    @Override
+    //metodo para obtener los usuarios filtrado segun su estado activo
+    public List<Usuario> obtenerDatos(int cantidadDatos) throws ClassNotFoundException, SQLException {
+        Connection con = obtenerConexion();
+        String sql = obtenerSelectSQL() + " where USU_ESTATUS = 1";
+        Statement st = con.createStatement();
+        st.setMaxRows(cantidadDatos);
+        ResultSet rs = st.executeQuery(sql); //ejecutar el query
+
+        //crear una lista de objetos
+        List<Usuario> objects = new ArrayList<>();
+        while (rs.next()) {
+            objects.add(getMappingResulsets(rs)); //agregar los datos a la lista
+        }
+        cerrarJDBCObjects(con, st, rs);
+        return objects;
     }
     
     public Usuario verificarUsuario(String nombreUsuario, String contrasena) throws SQLException, ClassNotFoundException{

@@ -131,7 +131,7 @@ public class ProcesarRoles {
                 }
 
                 Rol rolNuevo = new Rol(nombreRol, descRol, stcRol);
-                bw.write("Creando el empleado " + rolNuevo);
+                bw.write("Creando el Rol " + rolNuevo);
                 rolDAO.insertarDato(rolNuevo);
                 break;
             case 5:

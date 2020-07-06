@@ -203,9 +203,29 @@ public class HiloAntiendeClientes extends Thread {
 
                 case 3:
 
-                    bw.write("Gestion de Usuarios");
-                    bw.newLine();
-                    bw.flush();
+                    bw.write("\t*** Gestion de Usuarios *** ");
+                    PedidoDatos.flush(bw);
+                    ProcesarUsuarios procesarUsuarios = new ProcesarUsuarios();
+                    boolean flagMenuUsuario = true; // bandera para ingresar la menu de usuarios
+                    byte opcionMenuUser = 0; //variable para entrar al menu
+                    while (flagMenuUsuario) {
+                        do {
+                            bw.write(procesarUsuarios.obtenerMenuUsuario()); //llamar al metodo para mostrar menu
+                            PedidoDatos.flush(bw);
+                            bw.write("Ingrese una Opcion Valida -> ");
+                            PedidoDatos.flush(bw);
+                            opcionMenuUser = Byte.parseByte(br.readLine()); // capturamos la opcion elegida por el usuario
+                        } while (!((opcionMenuUser >= 1) && (opcionMenuUser <= 5)));
+
+                        if (opcionMenuUser == 5) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
+                            flagMenuUsuario = false;
+                        }
+                        
+                        procesarUsuarios.selecionarOpcionMenu(opcionMenuUser, bw, flagMenuUsuario, br); //enviamos la opcion elegida 
+                        PedidoDatos.flush(bw);
+                        
+                    }
+                    System.out.println("Saliendo del Menu Gestionar Rol ... ");
                     break;
 
                 case 4:
