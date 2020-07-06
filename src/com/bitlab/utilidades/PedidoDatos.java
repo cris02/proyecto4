@@ -38,6 +38,7 @@ public class PedidoDatos {
 
     //Metodo que recibe un BufferedWriter, BufferedReader, una lista de datos que se le solicitaran al usuario y
     // un arreglo con los tipos de datos que se espera recibir
+    //Este metodo se usa para agregar un nuevo empleado
     public static List solicitarDatos(BufferedWriter bw, BufferedReader br, String[] ingresoDatos, String[] tipoDato) throws IOException, ClassNotFoundException, SQLException {
         List lista = new ArrayList();
         RolDAO rolDao = new RolDAO();
@@ -90,6 +91,7 @@ public class PedidoDatos {
         bw.flush();
     }
 
+    //Metodo para actualizar un empleado
     public void menuActualiza(BufferedWriter bw, BufferedReader br, int id) throws ClassNotFoundException, SQLException {
         try {
             bw.write("Que dato desea actualizar del empleado");
@@ -115,7 +117,7 @@ public class PedidoDatos {
             Logger.getLogger(PedidoDatos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    //Metodo para reutilizar en opciones de admin
     public void opcionesAdmin(String tabla, BufferedWriter bw, BufferedReader br, Object dao) throws IOException{
         bw.write("Que " + tabla + " desea gestionar?");
         

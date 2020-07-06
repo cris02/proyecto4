@@ -6,9 +6,7 @@
 package com.bitlab.utilidades;
 
 import com.bitlab.dao.DepartamentoDAO;
-import com.bitlab.dao.RolDAO;
 import com.bitlab.entidades.Departamento;
-import com.bitlab.entidades.Usuario;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,7 +29,7 @@ public class ProcesaDepartamentos {
     Short vacantes;
     Short vacantesDisp;
     Byte estadoDept;
-
+    //Menu que se muestra al usuario al ingresar al menu Gestiona Departamentos
     public String obtenerMenuDept() {
         String menu = "\t1) Consultar Lista de Departamentos\n"
                 + "\t2) Eliminar Departamento \n "
@@ -41,23 +39,25 @@ public class ProcesaDepartamentos {
         return menu;
     }
 
-    //metodo  para gestionar las opciones de Departamentos
+    //Metodo  para gestionar las opciones de Departamentos
     public void seleccionarOpcionMenu(short opcionMenu, BufferedWriter bw, boolean flagMenu, BufferedReader br) throws ClassNotFoundException, SQLException, IOException {
         List<Departamento> listaDept = daoDept.obtenerDatos(LIMITE_DATOS); //obtenemos todos los departamentos de base de datos
 
         switch (opcionMenu) {
-            case 1: //Listando departamentos
+            case 1: //Muestra el listado de departamentos
 
                 byte i = 0;
+                bw.write("\t***** Departamentos de BITLAB *******");
+                bw.newLine();
                 for (Departamento depts : listaDept) {
                     bw.write("ID -> " + (i + 1) + depts.toString());
                     PedidoDatos.flush(bw);
                     i += 1;
                 }
                 break;
-            case 2:
+            case 2: //Opcion para eliminar un departamento
                 PedidoDatos.flush(bw);
-                bw.write("Igrese el [ID] del Departamento que desea eliminar:");
+                bw.write("Ingrese el [ID] del Departamento que desea eliminar:");
                 PedidoDatos.flush(bw);
                 byte id = Byte.parseByte(br.readLine());
                 --id;
@@ -71,10 +71,10 @@ public class ProcesaDepartamentos {
                 }
                 break;
             case 3:
-                //opcion para actualizar un Departamento
+                //Opcion para actualizar un Departamento
                 bw.write("Igrese el [ID] del Departamento que desea Actualizar:");
                 PedidoDatos.flush(bw);
-                for (Departamento depts : listaDept) {
+                for (Departamento depts : listaDept) { //Lista los id y nombres de los departamentos 
                     bw.write("ID -> " + depts.getIdDepartamento() + " " + depts.getNombre());
                     PedidoDatos.flush(bw);
                 }
@@ -86,7 +86,7 @@ public class ProcesaDepartamentos {
                 if (deptModificar != null) {
                     bw.write("El Departamento que desea Actualizar contiene la siguiente informacion  \n" + deptModificar);
                     PedidoDatos.flush(bw);
-                    mostrarIngresoDatos(bw, br, deptModificar, "");
+                    mostrarIngresoDatos(bw, br, deptModificar, ""); //Llamo al metodo privado que muestra un menu para ingreso datos
                     bw.write("Departamento " + deptModificar +" actualizado exitosamente");
                     daoDept.actualizarDatos(deptModificar); // modificamos los valores solicitados
                 } else {
@@ -95,7 +95,7 @@ public class ProcesaDepartamentos {
                 break;
             case 4: //Opcion para agregar nuevo Departamento
                 Departamento deptAgregar = new Departamento();
-                    mostrarIngresoDatos(bw, br, deptAgregar, " que desea agregar");
+                    mostrarIngresoDatos(bw, br, deptAgregar, " que desea agregar"); //Llamo al metodo privado que muestra un menu para ingreso datos
                     bw.write("Departamento " + deptAgregar +" agregado exitosamente");
                     daoDept.insertarDatoSinID(deptAgregar); // Agregamos el departamento a la base de datos
                 break;
@@ -104,7 +104,8 @@ public class ProcesaDepartamentos {
 
     }
     
-    
+    //Metodo para reutilizar al momento de la toma de datos por parte del usuario
+    //Modificar variable agregar, por ejemplo " que desea agregar", " que desea actualizar", etc.
     private void mostrarIngresoDatos(BufferedWriter bw, BufferedReader br, Departamento deptModificar, String agregar) throws IOException{
         do {
                         bw.write("Ingrese el Nuevo Nombre del Departamento " +agregar);
