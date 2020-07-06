@@ -79,7 +79,8 @@ public class HiloAntiendeClientes extends Thread {
                     e.printStackTrace();
                 }
                 if (us.getIdUsuario() == 2) {
-                    bw.write( us.getNombreUsuario()+ " Usted es un usuario administrador\n");
+                    bw.write( us.getNombreUsuario()+ " Usted es un usuario administrador");
+                    PedidoDatos.flush(bw);
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
 //                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
 //                    PedidoDatos.flush(bw);
@@ -92,6 +93,7 @@ public class HiloAntiendeClientes extends Thread {
                     
                 } else if(us.getIdUsuario() == 3) {
                     bw.write("Usted es un usuario de RRHH\n");
+                    PedidoDatos.flush(bw);
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
 //                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
 //                    PedidoDatos.flush(bw);
@@ -104,6 +106,7 @@ public class HiloAntiendeClientes extends Thread {
                 }
             } else {
                 bw.write("Credenciales invalidas, intente de nuevo, por seguridad se desconectara del sistema");
+                PedidoDatos.flush(bw);
             }
 
             /* *Termina prueba */
@@ -135,8 +138,16 @@ public class HiloAntiendeClientes extends Thread {
         DepartamentoDAO daoDept = new DepartamentoDAO();
         while (true) {
             log.info("Admin entra al menu principal");
-            bw.write("1. Gestión de departamentos\n2. Gestión de estados de empleados\n3. Gestión de usuarios\n4. Gestión de Roles\n5. Salir");
-            bw.newLine();
+            bw.write("1. Gestión de departamentos"); 
+            PedidoDatos.flush(bw);
+            bw.write("2. Gestión de estados de empleados");
+            PedidoDatos.flush(bw);
+            bw.write("3. Gestión de usuarios");
+            PedidoDatos.flush(bw);
+            bw.write("4. Gestión de Roles");
+            PedidoDatos.flush(bw);
+            bw.write("5. Salir");
+            PedidoDatos.flush(bw);
             int opcion = 0;
             String linea;
             do {
@@ -149,8 +160,7 @@ public class HiloAntiendeClientes extends Thread {
                 if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
                     log.info("Usuario selecciono una opcion no existente");
                     bw.write("Elige una opcion correcta.");
-                    bw.newLine();
-                    bw.flush();
+                    PedidoDatos.flush(bw);
                 } else if (opcion == 5) { //Si ingresa la opcion 4 el usuario se desconectara
 //                        System.out.println(laIP + ": se ha desconectado...");
                     log.info("Usuario desconectado del sistema");
@@ -207,8 +217,16 @@ public class HiloAntiendeClientes extends Thread {
         while (true) {
             try {
                 log.info("Cliente entra al menu principal");
-                bw.write("1. Contratación de empleados\n2. Actualización de datos del empleado\n3. Desactivación de empleados por despido\n4. Ver empleados activos\n5. Salir");
-                bw.newLine();
+                bw.write("1. Contratacion de empleados");
+                PedidoDatos.flush(bw);
+                bw.write("2. Actualizacion de datos del empleado");
+                PedidoDatos.flush(bw);
+                bw.write("3. Desactivacion de empleados por despido");
+                PedidoDatos.flush(bw);
+                bw.write("4. Ver empleados activos");
+                PedidoDatos.flush(bw);
+                bw.write("5. Salir");
+                PedidoDatos.flush(bw);
                 int opcion = 0;
                 String linea;
                 do {
@@ -264,11 +282,6 @@ public class HiloAntiendeClientes extends Thread {
                         int id = Integer.parseInt(datoId);
                         //ENVIAR EL ID 
                         pedirDato.menuActualiza(bw, br, id);
-//                        List lista;
-//                        String datosaSolicitar[] = {"Ingrese el ID del empleado:", "Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
-//                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
-//                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
-//                        String tiposDeDatos[] = {"int", "string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
                         break;
 
                     case 3:
