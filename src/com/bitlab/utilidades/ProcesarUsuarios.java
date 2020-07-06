@@ -107,7 +107,7 @@ public class ProcesarUsuarios {
                             if (!correoValido) {
                                 correoValido = true;
                             }
-                        } while (correoValido);
+                        } while (!correoValido);
                         userModificar.setCorreo(correoUser); //asignar correo si es valido
 
                         bw.write("Ingrese la Nuevo Contraseña del Uusario");

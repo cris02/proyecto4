@@ -89,8 +89,10 @@ public class Departamento {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
 
-   
+    @Override
+    public String toString() {
+        return "\tDepartamento = " + nombre + "\tDescripcion = " + descripcion + "\n\tPresupuesto = " + presupuesto + "\n\tVacantes Requeridas = " + vacantesRequeridas + "\tVacantes Disponibles = " + vacantesDisponibles + "\n\tEstado = " + estado;
+    }
     
 }

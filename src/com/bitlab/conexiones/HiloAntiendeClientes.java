@@ -182,15 +182,32 @@ public class HiloAntiendeClientes extends Thread {
             log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
             switch (opcion) {
                 case 1:
-                    bw.write("Gestión de departamentos prueba.");
+                    bw.write("\t*** Gestion de Departamentos *** ");
                     PedidoDatos.flush(bw);
-                    bw.write("Que departamento desea gestionar");
-                    PedidoDatos.flush(bw);
-                    List<Departamento> listaDept = daoDept.obtenerDatos();
-                    for (Departamento dep : listaDept) {
-                        bw.write(dep.getIdDepartamento() + ". " + dep.getNombre());
+                    
+                    ProcesaDepartamentos procesaDepts = new ProcesaDepartamentos();
+                    boolean flagMenuDept = true; // bandera para ingresar la menu de usuarios
+                    byte opcionMenuDept = 0; //variable para entrar al menu
+                    while (flagMenuDept) {
+                        do {
+                            bw.write(procesaDepts.obtenerMenuDept()); //llamar al metodo para mostrar menu
+                            PedidoDatos.flush(bw);
+                            bw.write("Ingrese una Opcion Valida -> ");
+                            PedidoDatos.flush(bw);
+                            opcionMenuDept = Byte.parseByte(br.readLine()); // capturamos la opcion elegida por el usuario
+                        } while (!((opcionMenuDept >= 1) && (opcionMenuDept <= 4)));
+
+                        if (opcionMenuDept == 4) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
+                            flagMenuDept = false;
+                        }
+                        
+                        procesaDepts.seleccionarOpcionMenu(opcionMenuDept, bw, flagMenuDept, br); //enviamos la opcion elegida 
                         PedidoDatos.flush(bw);
+                        
                     }
+                    System.out.println("Saliendo del Menu Gestionar Rol ... ");
+                    
+                    /* termina */
                     bw.write("Funcionalidad aun no completada");
                     PedidoDatos.flush(bw);
                     break;
