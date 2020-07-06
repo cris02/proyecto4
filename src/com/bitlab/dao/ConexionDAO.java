@@ -117,12 +117,14 @@ public abstract class ConexionDAO<T> {
     //metodo para obtener un dato por id
     public T obtenerDatoID(Object id) throws ClassNotFoundException, SQLException {
         String sql = obtenerSelectSQL() + SQL_WHERE + obtenerLLavePrimariaTabla() + SQL_PARAM;
+        log.info("Genrando el Query filtrado " + sql);
         System.out.println(sql); //datos para ver la construccion del sql
         Connection con = obtenerConexion();
         PreparedStatement ps = con.prepareStatement(sql);
+        
         ps.setObject(1, id);
-        log.info("Probando a ver si llega aca");
         ResultSet rs = ps.executeQuery();
+        
         T e = null;
         if (rs.next()) {
             e = getMappingResulsets(rs);
