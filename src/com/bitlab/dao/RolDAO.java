@@ -6,9 +6,12 @@
 package com.bitlab.dao;
 
 import com.bitlab.entidades.Rol;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,6 +66,26 @@ public class RolDAO extends ConexionDAO<Rol> {
     public List<Rol> obtenerDatos() throws ClassNotFoundException, SQLException {
         return super.obtenerDatos(); //To change body of generated methods, choose Tools | Templates.
     }
+    
+
+    @Override
+    public List<Rol> obtenerDatos(int cantidadDatos) throws ClassNotFoundException, SQLException {
+        Connection con = obtenerConexion();
+        String sql = obtenerSelectSQL() + " where ROL_ESTATUS = 1";
+        Statement st = con.createStatement();
+        st.setMaxRows(cantidadDatos);
+        ResultSet rs = st.executeQuery(sql); //ejecutar el query
+
+        //crear una lista de objetos
+        List<Rol> objects = new ArrayList<>();
+        while (rs.next()) {
+            objects.add(getMappingResulsets(rs)); //agregar los datos a la lista
+        }
+        cerrarJDBCObjects(con, st, rs);
+        return objects;
+    }
+    
+    
     
     
 

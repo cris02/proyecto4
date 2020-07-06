@@ -22,6 +22,13 @@ public class Rol {
         this.descripcion = descripcion;
         this.estatus = estatus;
     }
+
+    public Rol(String nombreRol, String descripcion, boolean estatus) {
+        this.nombreRol = nombreRol;
+        this.descripcion = descripcion;
+        this.estatus = estatus;
+    }
+    
     
     /*
         Metodos getter y Setter
@@ -61,7 +68,7 @@ public class Rol {
 
     @Override
     public String toString() {
-        return "\n-> ID_ROL = " + idRol + "\t NOMBRE DEL ROL = " + nombreRol + "\n";
+        return "\tCODIGO = " + idRol + "\t NOMBRE DEL ROL = " + nombreRol + "\n";
     }
     
     

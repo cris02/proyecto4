@@ -137,7 +137,6 @@ public class HiloAntiendeClientes extends Thread {
 
     public void menuAdmin(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
         DepartamentoDAO daoDept = new DepartamentoDAO();
-        Scanner teclado = new Scanner(System.in);
         while (true) {
             log.info("Admin entra al menu principal");
             bw.write("1. Gestión de departamentos"); 
@@ -209,11 +208,16 @@ public class HiloAntiendeClientes extends Thread {
                             bw.write(procesarRoles.obtenerMenu()); //llamar al metodo para mostrar menu
                             bw.write("Ingrese una Opcion Valida -> ");
                             PedidoDatos.flush(bw);
-                            opcionMenu = Byte.parseByte(teclado.nextLine());
+                            opcionMenu = Byte.parseByte(br.readLine());
                         } while (!((opcionMenu >= 1) && (opcionMenu <= 5)));
 
-                        procesarRoles.selecionarOpcionMenu(opcionMenu, bw, flagMenu); //enviamos la opcion elegida 
+                        if (opcionMenu == 5) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
+                            flagMenu = false;
+                        }
+                        
+                        procesarRoles.selecionarOpcionMenu(opcionMenu, bw, flagMenu, br); //enviamos la opcion elegida 
                         PedidoDatos.flush(bw);
+                        
                     }
                     System.out.println("Saliendo del Menu Gestionar Rol ... ");
                     break;
