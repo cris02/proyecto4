@@ -209,9 +209,27 @@ public class HiloAntiendeClientes extends Thread {
                     break;
 
                 case 2:
+                    EmpleadoDAO empDao = new EmpleadoDAO();
                     bw.write("Gestión de estados de empleados prueba. ");
                     bw.newLine();
                     bw.flush();
+                    ProcesaEstados proc = new ProcesaEstados();
+                    proc.obtenerEmpleadosActivosEInactivos(bw);
+                    bw.write("Ingrese el id del usuario que desea activar o desactivar");
+                    bw.newLine();
+                    short idUsuario = Short.parseShort(br.readLine());
+                    Empleado empActivarODesactivar = empDao.obtenerDatoID(idUsuario);
+                    bw.write("Ingrese el nuevo estado del empleado 1. Activo 2. Inactivo");
+                    bw.newLine();
+                    byte opcionAct = Byte.parseByte(br.readLine());
+                    if(opcionAct == 1){
+                        proc.activarDesactivarEmpleado(empActivarODesactivar, "activo");
+                    }else if(opcionAct == 2){
+                        proc.activarDesactivarEmpleado(empActivarODesactivar, "inactivo");
+                    }else{
+                        bw.write("Opcion de estado invalida");
+                    }
+                    
                     break;
 
                 case 3:
@@ -382,13 +400,6 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         DetallePlanillaDAO detPla = new DetallePlanillaDAO();
                         detPla.obtenerDatoTablas(bw);
-                        
-
-                        
-//                        for(Object obj : objetos){
-//                            bw.write(obj.toString());
-//                            PedidoDatos.flush(bw);
-//                        }
 
                         break;
                     case 6:

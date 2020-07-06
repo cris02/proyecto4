@@ -128,7 +128,7 @@ public abstract class ConexionDAO<T> {
         T e = null;
         if (rs.next()) {
             e = getMappingResulsets(rs);
-            log.info("Si encontro a un registrooooooooooooooooooooo");
+            log.info("Si encontro a un registro");
         }
         cerrarJDBCObjects(con, ps, rs);
         return e;
