@@ -26,7 +26,7 @@ public class ProcesarRoles {
     public String obtenerMenu() {
         String menu = "\t1) Consultar Lista de Roles\n "
                 + "\t2) Eliminar ROl \n "
-                + "\t3) MOdificar Rol \n "
+                + "\t3) Modificar ROl \n "
                 + "\t4) Crear Nuevo ROl \n "
                 + "\t5) Retornal al menu principal";
         return menu;
@@ -72,10 +72,14 @@ public class ProcesarRoles {
                 bw.write("Igrese el [ID] del rol que desea Actualizar:");
                 PedidoDatos.flush(bw);
                 byte idModificar = Byte.parseByte(br.readLine());
+                --idModificar;
                 Rol rolModificar = listRol2.get(idModificar); //Obtenemos el rol de la lista  
 
                 //comprobamos que objeto Rol que hemos recibido de las lista no sea null
                 if (rolModificar != null) {
+                    bw.write("El rol que desea Actualizar contiene la siguiente informacion + " + rolModificar);
+                    PedidoDatos.flush(bw);
+                    
                     bw.write("Ingrese el Nuevo Nombre del Rol");
                     PedidoDatos.flush(bw);
                     String nombreRol = br.readLine();
@@ -94,7 +98,7 @@ public class ProcesarRoles {
                         rolModificar.setEstatus(false); //modificamos solo si es inactivo
                     }
 
-                    bw.write("El Rol con la siguiente informacion sera actualizado " + rolModificar);
+                    bw.write("Rol  actualizado " + rolModificar);
 
                     rolDAO.actualizarDatos(rolModificar); // modificamos los valores solicitados
                 } else {
@@ -118,7 +122,7 @@ public class ProcesarRoles {
                     bw.write("Ingrese el estatus del Rol: 1. Activo o 2. Inactivo");
                     PedidoDatos.flush(bw);
                     statusRol = Byte.parseByte(br.readLine());
-                } while (!(statusRol >= 1 && statusRol <=2));
+                } while (!(statusRol >= 1 && statusRol <= 2));
 
                 if (statusRol == 1) {
                     stcRol = true;
@@ -132,7 +136,6 @@ public class ProcesarRoles {
                 break;
             case 5:
                 System.out.println("Retornal al menu principal");
-                flagMenu = false;
 
         }
     }
