@@ -201,15 +201,17 @@ public class HiloAntiendeClientes extends Thread {
 
                 case 4:
                     bw.write("\t*** Gestion de Roles *** ");
+                    PedidoDatos.flush(bw);
                     ProcesarRoles procesarRoles = new ProcesarRoles();
                     boolean flagMenu = true; // bandera para ingresar la menu de rol
                     byte opcionMenu = 0; //variable para entrar la menu
                     while (flagMenu) {
                         do {
                             bw.write(procesarRoles.obtenerMenu()); //llamar al metodo para mostrar menu
+                            PedidoDatos.flush(bw);
                             bw.write("Ingrese una Opcion Valida -> ");
                             PedidoDatos.flush(bw);
-                            opcionMenu = Byte.parseByte(teclado.nextLine());
+                            opcionMenu = Byte.parseByte(br.readLine());
                         } while (!((opcionMenu >= 1) && (opcionMenu <= 5)));
 
                         procesarRoles.selecionarOpcionMenu(opcionMenu, bw, flagMenu); //enviamos la opcion elegida 
