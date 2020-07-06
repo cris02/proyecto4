@@ -30,6 +30,16 @@ public class Usuario {
         this.ultimaConexio = ultimaConexio;
         this.idRol = idRol;
     }
+
+    public Usuario(String nombreUsuario, String correo, String contrasena, boolean estatus, int idRol) {
+        this.nombreUsuario = nombreUsuario;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.estatus = estatus;
+        this.idRol = idRol;
+    }
+    
+    
     
     /*
         Metodos Getter y Setter
@@ -98,6 +108,12 @@ public class Usuario {
     public void setIdRol(int idRol) {
         this.idRol = idRol;
     }
+
+    @Override
+    public String toString() {
+        return  "\tNOMBRE = " + nombreUsuario + "\tCORREO = " + correo + "\tCONTRASENA = " + contrasena  + "\tCODIGO ROL = " + idRol ;
+    }
     
     
+   
 }
