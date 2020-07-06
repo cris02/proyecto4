@@ -101,5 +101,11 @@ public class DetallePlanilla {
         this.idContrato = idContrato;
     }
 
+    @Override
+    public String toString() {
+        return "ISSS = $" + descISSS + ", AFP = $" + descAFP + ", Descuento de Renta = $" + descRenta + ", Total a Pagar = $" + totalPagar + ", Dias Laborados = " + diasLaborados + ", id Planilla=" + idPlanilla + ", id Contrato=" + idContrato;
+    }
+
+    
     
 }

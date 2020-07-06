@@ -121,16 +121,16 @@ public abstract class ConexionDAO<T> {
         Connection con = obtenerConexion();
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setObject(1, id);
-        
+        log.info("Probando a ver si llega aca");
         ResultSet rs = ps.executeQuery();
         T e = null;
         if (rs.next()) {
-            getMappingResulsets(rs);
+            e = getMappingResulsets(rs);
+            log.info("Si encontro a un registrooooooooooooooooooooo");
         }
         cerrarJDBCObjects(con, ps, rs);
         return e;
     }
-    
     
 
     //metodo para insertar datos

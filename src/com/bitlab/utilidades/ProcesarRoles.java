@@ -22,7 +22,7 @@ public class ProcesarRoles {
 
     //metodo para enviar el menu de Gestionar rol
     public String obtenerMenu() {
-        String menu = "\t1) Consultar Lista de Roles\n "
+        String menu = "\t1) Consultar Lista de Roles"
                 + "\t2) Eliminar ROl \n "
                 + "\t3) MOdificar Rol \n "
                 + "\t4) Crear Nuevo ROl \n "
@@ -53,7 +53,7 @@ public class ProcesarRoles {
                 bw.write("Crear Nuevo ROl");
                 break;
             case 5:
-                System.out.println("Retornal al menu principal");
+                System.out.println("Retornar al menu principal");
                 flagMenu = false;
 
         }

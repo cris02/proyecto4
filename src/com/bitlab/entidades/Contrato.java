@@ -162,6 +162,11 @@ public class Contrato {
     public void setIdEmpleado(int idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
+
+    @Override
+    public String toString() {
+        return "Contrato{" + "idContrato=" + idContrato + ", nombre=" + nombre + ", salario=" + salario + ", fechaInicioContrato=" + fechaInicioContrato + ", fechaFinContrato=" + fechaFinContrato + ", observacion=" + observacion + ", estatus=" + estatus + ", horario=" + horario + ", horasDia=" + horasDia + ", diasLaborados=" + diasLaborados + ", formaPago=" + formaPago + ", peridoPago=" + peridoPago + ", tipoPlaza=" + tipoPlaza + ", idEmpleado=" + idEmpleado + '}';
+    }
     
     
 }

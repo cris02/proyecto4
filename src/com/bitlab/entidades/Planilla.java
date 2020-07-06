@@ -78,5 +78,11 @@ public class Planilla {
     public void setResponsable(String responsable) {
         this.responsable = responsable;
     }
+
+    @Override
+    public String toString() {
+        return "ID Planilla=" + idPlanilla + ", nombre=" + nombre + ", observaciones=" + observaciones + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", responsable=" + responsable;
+    }
+    
     
 }

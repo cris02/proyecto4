@@ -36,6 +36,12 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
             "EMP_CORREO", "EMP_DIRECCION", "EMP_TELEFONO", "EMP_NIF", "EMP_COMISION", "EMP_PROFESION", "EMP_ESTADO", "ROL_ID_FK", "DEPT_ID_FK"};
         return columnas;
     }
+    
+    protected String[] obtenerColumnasConID() {
+        String[] columnas = {"EMP_ID_PK", "EMP_NOMBRES", "EMP_APELLIDOS", "EMP_GENERO", "EMP_DOCUMENTO", "EMP_FECHA_NACIMIENTO",
+            "EMP_CORREO", "EMP_DIRECCION", "EMP_TELEFONO", "EMP_NIF", "EMP_COMISION", "EMP_PROFESION", "EMP_ESTADO", "ROL_ID_FK", "DEPT_ID_FK"};
+        return columnas;
+    }
 
     @Override
     protected String obtenerLLavePrimariaTabla() {
@@ -149,6 +155,24 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         super.insertarDato(entity); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Empleado obtenerDatoID(Object id) throws ClassNotFoundException, SQLException {
+        String sql = "SELECT EMP_ID_PK, EMP_NOMBRES, EMP_APELLIDOS, EMP_GENERO, EMP_DOCUMENTO, EMP_FECHA_NACIMIENTO, EMP_CORREO, EMP_DIRECCION, EMP_TELEFONO, EMP_NIF, EMP_COMISION, EMP_PROFESION, EMP_ESTADO, ROL_ID_FK, DEPT_ID_FK FROM BIT_EMPLEADO WHERE EMP_ID_PK = ?";
+        System.out.println(sql); //datos para ver la construccion del sql
+        Connection con = obtenerConexion();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setObject(1, id);
+        ResultSet rs = ps.executeQuery();
+        Empleado e = null;
+        if (rs.next()) {
+            e = getMappingResulsets(rs);
+        }
+        cerrarJDBCObjects(con, ps, rs);
+        return e;
+    }
+    
+    
+
     //metodo para obtener los datos por medio de un parametro que indica cuantos registros deseo
     public List<Empleado> obtenerEmpleadosActivos() throws ClassNotFoundException, SQLException {
         Connection con = obtenerConexion();
@@ -167,7 +191,7 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         return empleados;
     }
 
-    public void desactivaEmpleado(short id, Empleado entity) throws ClassNotFoundException, SQLException {
+    public void desactivaEmpleado(short id) throws ClassNotFoundException, SQLException {
         Connection con = obtenerConexion();
 
         PreparedStatement ps = con.prepareStatement("UPDATE BIT_EMPLEADO SET EMP_ESTADO=? WHERE EMP_ID_PK=?");
@@ -201,17 +225,16 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         return emp;
     }
 
-    public Empleado mostrarEmpleadosActivos(BufferedWriter bw, List<Empleado> listaEmpleados) throws IOException, ClassNotFoundException, SQLException {
-//        List listaEmpleados;
+    public void mostrarEmpleadosActivos(BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
+        Connection con = obtenerConexion();
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT EMP_ID_PK, EMP_NOMBRES, EMP_APELLIDOS FROM BIT_EMPLEADO WHERE EMP_ESTADO=1"); //ejecutar el query
 
-        listaEmpleados = obtenerEmpleadosActivos();
-        Empleado emp = null;
-
-        for (Object obj : listaEmpleados) {
-            emp = (Empleado) obj;
-            bw.write(emp.getIdEmpleado() + ". " + emp.getNombres() + " " + emp.getApellidos());
-            PedidoDatos.flush(bw);
+        while (rs.next()) {
+                bw.write(rs.getInt("EMP_ID_PK") + ". " +
+                        " " + rs.getString("EMP_NOMBRES") + " " +rs.getString("EMP_APELLIDOS"));
+                bw.newLine();
         }
-        return emp;
+        cerrarJDBCObjects(con, st, rs);
     }
 }

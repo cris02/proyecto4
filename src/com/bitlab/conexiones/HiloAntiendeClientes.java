@@ -1,10 +1,14 @@
 package com.bitlab.conexiones;
 
 import com.bitlab.dao.ConexionDAO;
+import com.bitlab.dao.ContratoDAO;
 import com.bitlab.dao.DepartamentoDAO;
+import com.bitlab.dao.DetallePlanillaDAO;
 import com.bitlab.dao.EmpleadoDAO;
 import com.bitlab.dao.UsuarioDAO;
+import com.bitlab.entidades.Contrato;
 import com.bitlab.entidades.Departamento;
+import com.bitlab.entidades.DetallePlanilla;
 import com.bitlab.entidades.Empleado;
 import com.bitlab.entidades.Usuario;
 import com.bitlab.propiedades.ConfigProperties;
@@ -31,6 +35,7 @@ import java.util.logging.Logger;
  */
 public class HiloAntiendeClientes extends Thread {
 //Rama actualizacion
+
     private static Logger log = Logger.getLogger(HiloAntiendeClientes.class.getName());
     EnvioCorreo envio = new EnvioCorreo();
     Properties prop = new Properties();
@@ -47,7 +52,7 @@ public class HiloAntiendeClientes extends Thread {
 
         try {
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()), 927680);
 
             //Me da la ip a la cual el socket esta conectado
             String laIP = socket.getInetAddress().getHostAddress();
@@ -80,7 +85,7 @@ public class HiloAntiendeClientes extends Thread {
                     e.printStackTrace();
                 }
                 if (us.getIdUsuario() == 2) {
-                    bw.write( us.getNombreUsuario()+ " Usted es un usuario administrador");
+                    bw.write(us.getNombreUsuario() + " Usted es un usuario administrador");
                     PedidoDatos.flush(bw);
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
 //                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
@@ -137,10 +142,12 @@ public class HiloAntiendeClientes extends Thread {
 
     public void menuAdmin(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
         DepartamentoDAO daoDept = new DepartamentoDAO();
-        Scanner teclado = new Scanner(System.in);
         while (true) {
-            log.info("Admin entra al menu principal");
-            bw.write("1. Gestión de departamentos"); 
+            log.info("\tAdmin entra al menu principal");
+            bw.newLine();
+            bw.write("********Menu de Opciones**********");
+            PedidoDatos.flush(bw);
+            bw.write("1. Gestión de departamentos");
             PedidoDatos.flush(bw);
             bw.write("2. Gestión de estados de empleados");
             PedidoDatos.flush(bw);
@@ -149,6 +156,8 @@ public class HiloAntiendeClientes extends Thread {
             bw.write("4. Gestión de Roles");
             PedidoDatos.flush(bw);
             bw.write("5. Salir");
+            PedidoDatos.flush(bw);
+            bw.write("Seleccione el numero con la opcion que desea");
             PedidoDatos.flush(bw);
             int opcion = 0;
             String linea;
@@ -230,11 +239,14 @@ public class HiloAntiendeClientes extends Thread {
         }
     }
 
-    public void menuRRHH(BufferedReader br, BufferedWriter bw) throws IOException {
+    public void menuRRHH(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
         EmpleadoDAO daoEmp = null;
         while (true) {
             try {
                 log.info("Cliente entra al menu principal");
+                bw.newLine();
+                bw.write("\t********Menu de Opciones de RRHH**********");
+                PedidoDatos.flush(bw);
                 bw.write("1. Contratacion de empleados");
                 PedidoDatos.flush(bw);
                 bw.write("2. Actualizacion de datos del empleado");
@@ -243,7 +255,11 @@ public class HiloAntiendeClientes extends Thread {
                 PedidoDatos.flush(bw);
                 bw.write("4. Ver empleados activos");
                 PedidoDatos.flush(bw);
-                bw.write("5. Salir");
+                bw.write("5. Visualizacion de pagos generados.");
+                PedidoDatos.flush(bw);
+                bw.write("6. Salir");
+                PedidoDatos.flush(bw);
+                bw.write("Seleccione el numero con la opcion que desea");
                 PedidoDatos.flush(bw);
                 int opcion = 0;
                 String linea;
@@ -258,12 +274,12 @@ public class HiloAntiendeClientes extends Thread {
                         log.info("Usuario selecciono una opcion no existente");
                         bw.write("Elige una opcion correcta.");
                         PedidoDatos.flush(bw);
-                    } else if (opcion == 5) { //Si ingresa la opcion 5 el usuario se desconectara
+                    } else if (opcion == 6) { //Si ingresa la opcion 5 el usuario se desconectara
 //                    System.out.println(laIP + ": se ha desconectado...");
                         log.info("Usuario desconectado del sistema");
                         return;
                     }
-                } while (opcion < 1 || opcion > 5); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
+                } while (opcion < 1 || opcion > 6); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
 
                 log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
                 switch (opcion) {
@@ -291,10 +307,9 @@ public class HiloAntiendeClientes extends Thread {
                         bw.write("Ingrese el ID del usuario que desea actualizar datos ");
                         bw.newLine();
                         bw.flush();
-                        List listaEmpleados;
                         daoEmp = new EmpleadoDAO();
-                        listaEmpleados = daoEmp.obtenerEmpleadosActivos();
-                        daoEmp.mostrarEmpleadosActivos(bw, listaEmpleados);
+                        daoEmp.mostrarEmpleadosActivos(bw);
+                        bw.flush();
                         String datoId = br.readLine();
                         int id = Integer.parseInt(datoId);
                         //ENVIAR EL ID 
@@ -307,13 +322,11 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         bw.write("Que empleado desea retirar de la base de datos de empleados activos");
                         PedidoDatos.flush(bw);
-
-                        List listaEmp;
                         daoEmp = new EmpleadoDAO();
-                        listaEmp = daoEmp.obtenerEmpleadosActivos();
-                        Empleado emp = daoEmp.mostrarEmpleadosActivos(bw, listaEmp);
+                        daoEmp.mostrarEmpleadosActivos(bw);
+                        bw.flush();
                         String idDesactivar = br.readLine();
-                        daoEmp.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
+                        daoEmp.desactivaEmpleado(Short.parseShort(idDesactivar));
                         break;
 
                     case 4:
@@ -321,13 +334,26 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
 //                            List list=null;
                         daoEmp = new EmpleadoDAO();
-                        listaEmp = daoEmp.obtenerEmpleadosActivos();
-                        daoEmp.mostrarEmpleadosActivos(bw, listaEmp);
+                        daoEmp.mostrarEmpleadosActivos(bw);
                         bw.write("-------------------------------");
                         PedidoDatos.flush(bw);
 
                         break;
                     case 5:
+                        bw.write("Visualización de pagos generados");
+                        PedidoDatos.flush(bw);
+                        DetallePlanillaDAO detPla = new DetallePlanillaDAO();
+                        detPla.obtenerDatoTablas(bw);
+                        
+
+                        
+//                        for(Object obj : objetos){
+//                            bw.write(obj.toString());
+//                            PedidoDatos.flush(bw);
+//                        }
+
+                        break;
+                    case 6:
                         bw.write("Desconectado.");
                         System.exit(0);
                         break;
