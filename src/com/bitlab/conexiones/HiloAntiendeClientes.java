@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,7 +70,7 @@ public class HiloAntiendeClientes extends Thread {
             bw.newLine();
             bw.flush();
             String contra = br.readLine();
-            
+
             Usuario us = daoUsuario.verificarUsuario(usuario, contra);
 
             if (usuario.equals(us.getNombreUsuario()) && contra.equals(us.getContrasena())) {
@@ -86,12 +87,12 @@ public class HiloAntiendeClientes extends Thread {
 //                    PedidoDatos.flush(bw);
 //                    String codigoIngresado = br.readLine();
 //                    if(codigo == Integer.parseInt(codigoIngresado)){
-                        menuAdmin(br, bw);
+                    menuAdmin(br, bw);
 //                    }else{
 //                        bw.write("Codigo ingresado es invalido");
 //                    }
-                    
-                } else if(us.getIdUsuario() == 3) {
+
+                } else if (us.getIdUsuario() == 3) {
                     bw.write("Usted es un usuario de RRHH\n");
                     PedidoDatos.flush(bw);
 //                    int codigo = envio.enviarCorreo(prop, us, bw);
@@ -99,7 +100,7 @@ public class HiloAntiendeClientes extends Thread {
 //                    PedidoDatos.flush(bw);
 //                    String codigoIngresado = br.readLine();
 //                    if(codigo == Integer.parseInt(codigoIngresado)){
-                        menuRRHH(br, bw);
+                    menuRRHH(br, bw);
 //                    }else{
 //                        bw.write("Codigo ingresado es invalido");
 //                    }
@@ -136,6 +137,7 @@ public class HiloAntiendeClientes extends Thread {
 
     public void menuAdmin(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
         DepartamentoDAO daoDept = new DepartamentoDAO();
+        Scanner teclado = new Scanner(System.in);
         while (true) {
             log.info("Admin entra al menu principal");
             bw.write("1. Gestión de departamentos"); 
@@ -175,9 +177,9 @@ public class HiloAntiendeClientes extends Thread {
                     PedidoDatos.flush(bw);
                     bw.write("Que departamento desea gestionar");
                     PedidoDatos.flush(bw);
-                    List <Departamento> listaDept= daoDept.obtenerDatos();
-                    for(Departamento dep : listaDept){
-                        bw.write(dep.getIdDepartamento() + ". " +dep.getNombre());
+                    List<Departamento> listaDept = daoDept.obtenerDatos();
+                    for (Departamento dep : listaDept) {
+                        bw.write(dep.getIdDepartamento() + ". " + dep.getNombre());
                         PedidoDatos.flush(bw);
                     }
                     bw.write("Funcionalidad aun no completada");
@@ -198,10 +200,24 @@ public class HiloAntiendeClientes extends Thread {
                     break;
 
                 case 4:
-                    bw.write("Gestion de Roles");
-                    System.exit(0);
+                    bw.write("\t*** Gestion de Roles *** ");
+                    ProcesarRoles procesarRoles = new ProcesarRoles();
+                    boolean flagMenu = true; // bandera para ingresar la menu de rol
+                    byte opcionMenu = 0; //variable para entrar la menu
+                    while (flagMenu) {
+                        do {
+                            bw.write(procesarRoles.obtenerMenu()); //llamar al metodo para mostrar menu
+                            bw.write("Ingrese una Opcion Valida -> ");
+                            PedidoDatos.flush(bw);
+                            opcionMenu = Byte.parseByte(teclado.nextLine());
+                        } while (!((opcionMenu >= 1) && (opcionMenu <= 5)));
+
+                        procesarRoles.selecionarOpcionMenu(opcionMenu, bw, flagMenu); //enviamos la opcion elegida 
+                        PedidoDatos.flush(bw);
+                    }
+                    System.out.println("Saliendo del Menu Gestionar Rol ... ");
                     break;
-                
+
                 case 5:
                     bw.write("Desconectado.");
                     System.exit(0);
@@ -239,8 +255,7 @@ public class HiloAntiendeClientes extends Thread {
                     if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
                         log.info("Usuario selecciono una opcion no existente");
                         bw.write("Elige una opcion correcta.");
-                        bw.newLine();
-                        bw.flush();
+                        PedidoDatos.flush(bw);
                     } else if (opcion == 5) { //Si ingresa la opcion 5 el usuario se desconectara
 //                    System.out.println(laIP + ": se ha desconectado...");
                         log.info("Usuario desconectado del sistema");
@@ -290,7 +305,7 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         bw.write("Que empleado desea retirar de la base de datos de empleados activos");
                         PedidoDatos.flush(bw);
-                        
+
                         List listaEmp;
                         daoEmp = new EmpleadoDAO();
                         listaEmp = daoEmp.obtenerEmpleadosActivos();
@@ -299,19 +314,21 @@ public class HiloAntiendeClientes extends Thread {
                         daoEmp.desactivaEmpleado(Short.parseShort(idDesactivar), emp);
                         break;
 
-                    case 4: bw.write("Lista de empleados activos de BitLab");
-                            PedidoDatos.flush(bw);
+                    case 4:
+                        bw.write("Lista de empleados activos de BitLab");
+                        PedidoDatos.flush(bw);
 //                            List list=null;
                         daoEmp = new EmpleadoDAO();
                         listaEmp = daoEmp.obtenerEmpleadosActivos();
                         daoEmp.mostrarEmpleadosActivos(bw, listaEmp);
                         bw.write("-------------------------------");
                         PedidoDatos.flush(bw);
-                        
+
                         break;
-                    case 5: bw.write("Desconectado.");
-                            System.exit(0);
-                            break;
+                    case 5:
+                        bw.write("Desconectado.");
+                        System.exit(0);
+                        break;
                     default:
                         bw.write("Opcion invalida.");
                 }
