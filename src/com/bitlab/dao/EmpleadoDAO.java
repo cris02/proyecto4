@@ -224,7 +224,7 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         }
         return emp;
     }
-
+    //Muestra la lista de empleados que estan activos
     public void mostrarEmpleadosActivos(BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
         Connection con = obtenerConexion();
         Statement st = con.createStatement();

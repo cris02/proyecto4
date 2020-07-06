@@ -20,12 +20,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -182,23 +178,58 @@ public class HiloAntiendeClientes extends Thread {
             log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
             switch (opcion) {
                 case 1:
-                    bw.write("Gestión de departamentos prueba.");
+                    bw.write("\t*** Gestion de Departamentos *** ");
                     PedidoDatos.flush(bw);
-                    bw.write("Que departamento desea gestionar");
-                    PedidoDatos.flush(bw);
-                    List<Departamento> listaDept = daoDept.obtenerDatos();
-                    for (Departamento dep : listaDept) {
-                        bw.write(dep.getIdDepartamento() + ". " + dep.getNombre());
+                    
+                    ProcesaDepartamentos procesaDepts = new ProcesaDepartamentos();
+                    boolean flagMenuDept = true; // bandera para ingresar la menu de usuarios
+                    byte opcionMenuDept = 0; //variable para entrar al menu
+                    while (flagMenuDept) {
+                        do {
+                            bw.write(procesaDepts.obtenerMenuDept()); //llamar al metodo para mostrar menu
+                            PedidoDatos.flush(bw);
+                            bw.write("Ingrese una Opcion Valida -> ");
+                            PedidoDatos.flush(bw);
+                            opcionMenuDept = Byte.parseByte(br.readLine()); // capturamos la opcion elegida por el usuario
+                        } while (!((opcionMenuDept >= 1) && (opcionMenuDept <= 4)));
+
+                        if (opcionMenuDept == 4) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
+                            flagMenuDept = false;
+                        }
+                        
+                        procesaDepts.seleccionarOpcionMenu(opcionMenuDept, bw, flagMenuDept, br); //enviamos la opcion elegida 
                         PedidoDatos.flush(bw);
+                        
                     }
+                    System.out.println("Saliendo del Menu Gestionar Rol ... ");
+                    
+                    /* termina */
                     bw.write("Funcionalidad aun no completada");
                     PedidoDatos.flush(bw);
                     break;
 
                 case 2:
+                    EmpleadoDAO empDao = new EmpleadoDAO();
                     bw.write("Gestión de estados de empleados prueba. ");
                     bw.newLine();
                     bw.flush();
+                    ProcesaEstados proc = new ProcesaEstados();
+                    proc.obtenerEmpleadosActivosEInactivos(bw);
+                    bw.write("Ingrese el id del usuario que desea activar o desactivar");
+                    bw.newLine();
+                    short idUsuario = Short.parseShort(br.readLine());
+                    Empleado empActivarODesactivar = empDao.obtenerDatoID(idUsuario);
+                    bw.write("Ingrese el nuevo estado del empleado 1. Activo 2. Inactivo");
+                    bw.newLine();
+                    byte opcionAct = Byte.parseByte(br.readLine());
+                    if(opcionAct == 1){
+                        proc.activarDesactivarEmpleado(empActivarODesactivar, "activo");
+                    }else if(opcionAct == 2){
+                        proc.activarDesactivarEmpleado(empActivarODesactivar, "inactivo");
+                    }else{
+                        bw.write("Opcion de estado invalida");
+                    }
+                    
                     break;
 
                 case 3:
@@ -369,13 +400,6 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         DetallePlanillaDAO detPla = new DetallePlanillaDAO();
                         detPla.obtenerDatoTablas(bw);
-                        
-
-                        
-//                        for(Object obj : objetos){
-//                            bw.write(obj.toString());
-//                            PedidoDatos.flush(bw);
-//                        }
 
                         break;
                     case 6:
