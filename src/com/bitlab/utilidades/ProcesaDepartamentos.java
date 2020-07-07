@@ -97,7 +97,7 @@ public class ProcesaDepartamentos {
                 Departamento deptAgregar = new Departamento();
                     mostrarIngresoDatos(bw, br, deptAgregar, " que desea agregar"); //Llamo al metodo privado que muestra un menu para ingreso datos
                     bw.write("Departamento " + deptAgregar +" agregado exitosamente");
-                    daoDept.insertarDatoSinID(deptAgregar); // Agregamos el departamento a la base de datos
+                    daoDept.insertarDato(deptAgregar);
                 break;
                 default: bw.write("Opcion invalida");
         }

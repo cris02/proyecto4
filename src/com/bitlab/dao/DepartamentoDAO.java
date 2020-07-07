@@ -6,15 +6,20 @@
 package com.bitlab.dao;
 
 import com.bitlab.entidades.Departamento;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Aguilar
  */
 public class DepartamentoDAO extends ConexionDAO<Departamento> {
+    
 
     @Override
     protected String obtenerNombreTabla() {
@@ -78,5 +83,24 @@ public class DepartamentoDAO extends ConexionDAO<Departamento> {
     public void actualizarDatos(Departamento entity) throws ClassNotFoundException, SQLException {
         super.actualizarDatos(entity); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Departamento> obtenerDatos(int cantidadDatos) throws ClassNotFoundException, SQLException {
+        cantidadDatos = 1000;
+        Connection con = obtenerConexion();
+        Statement st = con.createStatement();
+        st.setMaxRows(cantidadDatos);
+        ResultSet rs = st.executeQuery(obtenerSelectSQL() + " WHERE DEPT_ESTADO=TRUE"); //ejecutar el query
+
+        //crear una lista de objetos
+        List<Departamento> depts = new ArrayList<>();
+        while (rs.next()) {
+            depts.add(getMappingResulsets(rs)); //agregar los datos a la lista
+        }
+        cerrarJDBCObjects(con, st, rs);
+        return depts;
+    }
+    
+    
 
 }

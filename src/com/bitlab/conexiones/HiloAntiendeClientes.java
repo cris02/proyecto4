@@ -47,7 +47,6 @@ public class HiloAntiendeClientes extends Thread {
 
             //Me da la ip a la cual el socket esta conectado
             String laIP = socket.getInetAddress().getHostAddress();
-            System.out.println(laIP + ": se ha conectado...");
 
             UsuarioDAO daoUsuario = new UsuarioDAO();
             bw.write("Ingrese su usuario");
@@ -85,15 +84,16 @@ public class HiloAntiendeClientes extends Thread {
                     bw.write("Usted es un usuario de RRHH\n");
                     PedidoDatos.flush(bw);
                     int codigo = envio.enviarCorreo(prop, us, bw);
-                    bw.write("Ingrese el codigo enviado a " +us.getCorreo());
+                    bw.write("Ingrese el codigo enviado a " + us.getCorreo());
                     PedidoDatos.flush(bw);
                     String codigoIngresado = br.readLine();
-                    if(codigo == Integer.parseInt(codigoIngresado)){
-                    menuRRHH(br, bw);
-                    }else{
+                    if (codigo == Integer.parseInt(codigoIngresado)) {
+                        menuRRHH(br, bw);
+                    } else {
                         bw.write("Codigo ingresado es invalido");
                     }
                 }
+                log.info("**** CLIENTE con IP: " + laIP + ": se ha conectado de forma exitosa****");
             } else {
                 bw.write("Credenciales invalidas, intente de nuevo, por seguridad se desconectara del sistema");
                 PedidoDatos.flush(bw);
@@ -193,37 +193,32 @@ public class HiloAntiendeClientes extends Thread {
 
                 case 2:// Opcion para gestionar el estados de empleados
                     EmpleadoDAO empDao = new EmpleadoDAO();
-                    List<Empleado> listEmp = empDao.obtenerDatos(); //Obtengo una lista de empleados activos e inactivos
                     bw.write("Gestión de estados de empleados");
                     bw.newLine();
                     byte bandera = 1;
-                    while (bandera == 1) { 
-                        String estado = "";
-                        for (Empleado emp : listEmp) { //Recorro la lista para ver si el estado es activo o inactivo
-                            if (emp.isEstado()) {
-                                estado = "Activo";
-                            } else {
-                                estado = "Inactivo";
-                            }
-                            bw.write(emp.getIdEmpleado() + ". " + emp.getNombres() + " " + emp.getApellidos() + " -- Estado: " + estado);
-                            bw.newLine();
-                        }
-                        bw.write("Ingrese el [ID] del Empleado que desea inactivar:");
+                    while (bandera == 1) {
+                        empDao.mostrarEmpleadosActivos(bw); //Obtengo una lista de empleados activos e inactivos
+                        bw.write("Desea desactivar un empleado? Digite [1]. Si, [2]. No");
                         PedidoDatos.flush(bw);
-                        byte id = Byte.parseByte(br.readLine());
-                        Empleado empleado = listEmp.get(id - 1);
-
-                        if (empleado != null) {
-                            empleado.setEstado(false); //Seteo el estado a false para ponerlo inactivo
-                            empDao.desactivaEmpleado(id);
-                            bw.write("El Empleado inactivado es :" + empleado.getNombres() + " " + empleado.getApellidos());
+                        bandera = Byte.parseByte(br.readLine());
+                        if (bandera == 1) {
+                            bw.write("Ingrese el [ID] del Empleado que desea inactivar:");
                             PedidoDatos.flush(bw);
-                            bw.write("Desea desactivar otro empleado? Digite [1]. Si, [2]. No");
-                            PedidoDatos.flush(bw);
-                            bandera = Byte.parseByte(br.readLine());
-                        } else {
-                            bw.write("No se pudo inactivar el Empleado");
+                            byte id = Byte.parseByte(br.readLine());
+                            Empleado empleado = empDao.obtenerEmpleado(id);
+                            if (empleado != null) {
+                                empleado.setEstado(false); //Seteo el estado a false para ponerlo inactivo
+                                empDao.desactivaEmpleado(id);
+                                bw.write("El Empleado inactivado es :" + empleado.getNombres() + " " + empleado.getApellidos());
+                                PedidoDatos.flush(bw);
+                                bw.write("Desea desactivar otro empleado? Digite [1]. Si, [2]. No");
+                                PedidoDatos.flush(bw);
+                                bandera = Byte.parseByte(br.readLine());
+                            } else {
+                                bw.write("No se pudo inactivar el Empleado");
+                            }
                         }
+
                     }
                     break;
 
@@ -338,7 +333,7 @@ public class HiloAntiendeClientes extends Thread {
                         List listaDatos;
                         String datosSolicitar[] = {"Ingrese el nombre del empleado:", "Ingrese el apellido del empleado", "Ingrese Genero [M] o [F]",
                             "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento formato [YYYY/MM/DD]", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
-                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado","Ingrese el estado del empleado [1]. Activo, [2]. Inactivo", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
+                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese el estado del empleado [1]. Activo, [2]. Inactivo", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
                         String tiposDatos[] = {"string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
                         listaDatos = PedidoDatos.solicitarDatos(bw, br, datosSolicitar, tiposDatos);
 

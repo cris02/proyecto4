@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/dao/ConexionDAO.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/utilidades/ProcesarRoles.java</file>
             <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/conexiones/HiloAntiendeClientes.java</file>
-            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/entidades/Empleado.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/entidades/Departamento.java</file>
             <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/conexiones/Servidor.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/dao/DepartamentoDAO.java</file>
+            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/dao/UsuarioDAO.java</file>
             <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/dao/EmpleadoDAO.java</file>
-            <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/utilidades/PedidoDatos.java</file>
             <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/utilidades/ProcesarUsuarios.java</file>
             <file>file:/home/henry/NetBeansProjects/mavenproject2/proyecto4/src/com/bitlab/utilidades/ProcesaDepartamentos.java</file>
         </group>

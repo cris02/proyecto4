@@ -24,7 +24,7 @@ public class ProcesarRoles {
 
     //metodo para enviar el menu de Gestionar rol
     public String obtenerMenu() {
-        String menu = "\t1) Consultar Lista de Roles"
+        String menu = "\t1) Consultar Lista de Roles\n"
                 + "\t2) Eliminar ROl \n "
                 + "\t3) Modificar ROl \n "
                 + "\t4) Crear Nuevo ROl \n "
@@ -53,7 +53,7 @@ public class ProcesarRoles {
             case 2:
                 //Elimnar el Rol de manera logica
                 PedidoDatos.flush(bw);
-                bw.write("Igrese el [ID] del rol que desea eliminar:");
+                bw.write("Ingrese el [ID] del rol que desea eliminar:");
                 PedidoDatos.flush(bw);
                 byte id = Byte.parseByte(br.readLine());
                 --id;
@@ -69,7 +69,7 @@ public class ProcesarRoles {
 
             case 3:
                 //opcion para actualizar un rol
-                bw.write("Igrese el [ID] del rol que desea Actualizar:");
+                bw.write("Ingrese el [ID] del rol que desea Actualizar:");
                 PedidoDatos.flush(bw);
                 byte idModificar = Byte.parseByte(br.readLine());
                 --idModificar;
@@ -135,7 +135,7 @@ public class ProcesarRoles {
                 rolDAO.insertarDato(rolNuevo);
                 break;
             case 5:
-                System.out.println("Retornal al menu principal");
+                System.out.println("Retornar al menu principal");
 
         }
     }
