@@ -22,8 +22,8 @@ public class Servidor {
                 log.info("Esperando conexion de algun cliente");
                 Socket socket = serverSocket.accept(); //El socket esta pendiente de alguna conexion y cuando entra la acepta
                 HiloAntiendeClientes hilo = new HiloAntiendeClientes(socket); //Creo un nuevo hilo con la clase que hereda de Thread
-                System.out.println("Cliente " +socket.getInetAddress().getHostAddress() + " conectado exitosamente");
                 hilo.start(); //Inicia el nuevo hilo
+                System.out.println("Cliente " +socket.getInetAddress().getHostAddress() + " conectado exitosamente");
             }
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);

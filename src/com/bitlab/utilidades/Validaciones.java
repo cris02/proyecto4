@@ -26,7 +26,6 @@ public class Validaciones {
     public boolean validarCorreo(String correo) {
         boolean dato;
         correo.toLowerCase();
-
         if (correo.matches("[\\w\\-.]+@{1}([\\w-]+\\.)+[\\w-\\.]+")) { //regla para validar el correo
             dato = true;
         } else {

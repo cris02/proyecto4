@@ -111,13 +111,6 @@ public class UsuarioDAO extends ConexionDAO<Usuario>{
             us.setIdRol(rs.getInt("ROL_ID_FK"));
         }
         return us;
-        
-//        return new Usuario(
-//                rs.getString("USU_NOMBRE"),
-//                rs.getString("USU_CORREO"),
-//                rs.getString("USU_CONTRASENA"),
-//                rs.getInt("ROL_ID_FK")
-//        );
     }
 
     

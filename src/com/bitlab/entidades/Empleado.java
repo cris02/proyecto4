@@ -38,11 +38,29 @@ public class Empleado {
             this.nif = (String) datos[8];
             this.comision = Double.parseDouble((String) datos[9]);
             this.profesion = (String) datos[10];
-            this.estado = (boolean) datos[11];
+            this.estado = true;
             this.idRol = (int) datos[12];
             this.idDepartamento = (int) datos[13];
         }
     }
+
+    public Empleado(String nombres, String apellidos, String genero, String documentoIdentidad, Timestamp fechaNacimiento, String correo, String direccion, String telefono, String nif, double comision, String profesion, int idRol, int idDepartamento) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.genero = genero;
+        this.documentoIdentidad = documentoIdentidad;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.nif = nif;
+        this.comision = comision;
+        this.profesion = profesion;
+        this.idRol = idRol;
+        this.idDepartamento = idDepartamento;
+    }
+    
+    
 
     public Empleado(int idEmpleado, String nombres, String apellidos, String genero, String documentoIdentidad, Timestamp fechaNacimiento, String correo, String direccion, String telefono, String nif, double comision, String profesion, boolean estado, int idRol, int idDepartamento) {
         this.idEmpleado = idEmpleado;
@@ -70,6 +88,13 @@ public class Empleado {
         this.idEmpleado = idEmpleado;
         this.nombres = nombres;
         this.apellidos = apellidos;
+    }
+    
+    public Empleado(int idEmpleado, String nombres, String apellidos, boolean estado) {
+        this.idEmpleado = idEmpleado;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.estado = estado;
     }
 
     /*

@@ -29,19 +29,20 @@ public class EnvioCorreo {
         int codigo=0;
         EncriptacionTexto encriptador = new EncriptacionTexto();
         Email email = new SimpleEmail();
-        email.setHostName(encriptador.getTextoDesencriptado(prop.getProperty("srName")));
-        email.setSmtpPort(Integer.parseInt(encriptador.getTextoDesencriptado(prop.getProperty("srPor"))));
-        email.setAuthentication(encriptador.getTextoDesencriptado(prop.getProperty("srU")), encriptador.getTextoDesencriptado(prop.getProperty("srPs")));
+        email.setHostName(encriptador.getTextoDesencriptado(prop.getProperty("srEmName")));
+        email.setSmtpPort(Integer.parseInt(encriptador.getTextoDesencriptado(prop.getProperty("srEmPort"))));
+        email.setAuthentication(encriptador.getTextoDesencriptado(prop.getProperty("srEmU")), encriptador.getTextoDesencriptado(prop.getProperty("srEmPs")));
         email.setSSLOnConnect(true);
         try {
-            email.setFrom(encriptador.getTextoDesencriptado(prop.getProperty("srU")));
-            email.setSubject(prop.getProperty("asun"));
+            email.setFrom(encriptador.getTextoDesencriptado(prop.getProperty("srEmU")));
+            email.setSubject(prop.getProperty("textoE"));
             codigo = obtenerCodigo(); /*Aca obtenemos el codigo de verificacion random y en la siguiente linea
             de codigo se le agrega al cuerpo del email*/
             email.setMsg("Para verificar su identidad, ingrese el siguiente codigo: " + codigo);
             email.addTo(usuario.getCorreo()); /* Y aqui establecemos el correo electronico al que se va a enviar el codigo*/
             email.send();
             bw.write("Email enviado a " +usuario.getCorreo() );
+            bw.newLine();
             bw.write("Por favor ingrese el código que hemos enviado a su correo electrónico.");
         } catch (EmailException ex) {
             Logger.getLogger(EnvioCorreo.class.getName()).log(Level.SEVERE, null, ex);
