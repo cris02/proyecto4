@@ -1,14 +1,9 @@
 package com.bitlab.conexiones;
 
-import com.bitlab.dao.ConexionDAO;
-import com.bitlab.dao.ContratoDAO;
 import com.bitlab.dao.DepartamentoDAO;
 import com.bitlab.dao.DetallePlanillaDAO;
 import com.bitlab.dao.EmpleadoDAO;
 import com.bitlab.dao.UsuarioDAO;
-import com.bitlab.entidades.Contrato;
-import com.bitlab.entidades.Departamento;
-import com.bitlab.entidades.DetallePlanilla;
 import com.bitlab.entidades.Empleado;
 import com.bitlab.entidades.Usuario;
 import com.bitlab.propiedades.ConfigProperties;
@@ -54,14 +49,7 @@ public class HiloAntiendeClientes extends Thread {
             String laIP = socket.getInetAddress().getHostAddress();
             System.out.println(laIP + ": se ha conectado...");
 
-            /* Empieza prueba */
             UsuarioDAO daoUsuario = new UsuarioDAO();
-//            Usuario us = new Usuario();
-//            us.setNombreUsuario("henjo");
-//            us.setContrasena("prueba");
-//            us.setCorreo("henry.callejas@gmail.com");
-//            us.setIdUsuario(1);
-
             bw.write("Ingrese su usuario");
             bw.newLine();
             bw.flush();
@@ -83,28 +71,28 @@ public class HiloAntiendeClientes extends Thread {
                 if (us.getIdUsuario() == 2) {
                     bw.write(us.getNombreUsuario() + " Usted es un usuario administrador");
                     PedidoDatos.flush(bw);
-//                    int codigo = envio.enviarCorreo(prop, us, bw);
-//                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
-//                    PedidoDatos.flush(bw);
-//                    String codigoIngresado = br.readLine();
-//                    if(codigo == Integer.parseInt(codigoIngresado)){
+                    int codigo = envio.enviarCorreo(prop, us, bw);
+                    bw.write("Ingrese el codigo enviado a " +us.getCorreo());
+                    PedidoDatos.flush(bw);
+                    String codigoIngresado = br.readLine();
+                    if(codigo == Integer.parseInt(codigoIngresado)){
                     menuAdmin(br, bw);
-//                    }else{
-//                        bw.write("Codigo ingresado es invalido");
-//                    }
+                    }else{
+                        bw.write("Codigo ingresado es invalido");
+                    }
 
                 } else if (us.getIdUsuario() == 3) {
                     bw.write("Usted es un usuario de RRHH\n");
                     PedidoDatos.flush(bw);
-//                    int codigo = envio.enviarCorreo(prop, us, bw);
-//                    bw.write("Ingrese el codigo enviado a" +us.getCorreo());
-//                    PedidoDatos.flush(bw);
-//                    String codigoIngresado = br.readLine();
-//                    if(codigo == Integer.parseInt(codigoIngresado)){
+                    int codigo = envio.enviarCorreo(prop, us, bw);
+                    bw.write("Ingrese el codigo enviado a " +us.getCorreo());
+                    PedidoDatos.flush(bw);
+                    String codigoIngresado = br.readLine();
+                    if(codigo == Integer.parseInt(codigoIngresado)){
                     menuRRHH(br, bw);
-//                    }else{
-//                        bw.write("Codigo ingresado es invalido");
-//                    }
+                    }else{
+                        bw.write("Codigo ingresado es invalido");
+                    }
                 }
             } else {
                 bw.write("Credenciales invalidas, intente de nuevo, por seguridad se desconectara del sistema");
@@ -137,7 +125,6 @@ public class HiloAntiendeClientes extends Thread {
     }
 
     public void menuAdmin(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
-        DepartamentoDAO daoDept = new DepartamentoDAO();
         while (true) {
             log.info("\tAdmin entra al menu principal");
             bw.newLine();
@@ -164,23 +151,23 @@ public class HiloAntiendeClientes extends Thread {
                 linea = br.readLine(); //Lee lo que introduce el usuario
                 log.info("Esperando respuesta del usuario");
                 opcion = Integer.parseInt(linea);
-                if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                if (opcion < 1 || opcion > 6) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
                     log.info("Usuario selecciono una opcion no existente");
                     bw.write("Elige una opcion correcta.");
                     PedidoDatos.flush(bw);
-                } else if (opcion == 5) { //Si ingresa la opcion 4 el usuario se desconectara
+                } else if (opcion == 6) { //Si ingresa la opcion 6 el usuario se desconectara
 //                        System.out.println(laIP + ": se ha desconectado...");
                     log.info("Usuario desconectado del sistema");
                     return;
                 }
-            } while (opcion < 1 || opcion > 5); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
+            } while (opcion < 1 || opcion > 6); //Mientras el usuario ingrese opcion del 1 al 6 se estara imprimiendo el menu principal
 
             log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
             switch (opcion) {
                 case 1:
                     bw.write("\t*** Gestion de Departamentos *** ");
                     PedidoDatos.flush(bw);
-                    
+
                     ProcesaDepartamentos procesaDepts = new ProcesaDepartamentos();
                     boolean flagMenuDept = true; // bandera para ingresar la menu de usuarios
                     byte opcionMenuDept = 0; //variable para entrar al menu
@@ -196,45 +183,48 @@ public class HiloAntiendeClientes extends Thread {
                         if (opcionMenuDept == 4) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
                             flagMenuDept = false;
                         }
-                        
+
                         procesaDepts.seleccionarOpcionMenu(opcionMenuDept, bw, flagMenuDept, br); //enviamos la opcion elegida 
                         PedidoDatos.flush(bw);
-                        
+
                     }
                     System.out.println("Saliendo del Menu Gestionar Rol ... ");
-                    
-                    /* termina */
-                    bw.write("Funcionalidad aun no completada");
-                    PedidoDatos.flush(bw);
                     break;
 
-                case 2:
+                case 2:// Opcion para gestionar el estados de empleados
                     EmpleadoDAO empDao = new EmpleadoDAO();
-                    List<Empleado> listEmp = empDao.obtenerDatos();
+                    List<Empleado> listEmp = empDao.obtenerDatos(); //Obtengo una lista de empleados activos e inactivos
                     bw.write("Gestión de estados de empleados");
                     bw.newLine();
-                    String estado ="";
-                for(Empleado emp : listEmp){
-                    if(emp.isEstado()) estado = "Activo";
-                    else estado = "Inactivo";
-                    bw.write(emp.getIdEmpleado() + ". " + emp.getNombres() + " " + emp.getApellidos()+" -- Estado: " + estado);
-                    bw.newLine();
-                }
-                bw.write("Ingrese el [ID] del Empleado que desea inactivar:");
-                PedidoDatos.flush(bw);
-                byte id = Byte.parseByte(br.readLine());
-                Empleado empleado = listEmp.get(id);
-                
-                if (empleado != null) {
-                    empleado.setEstado(false);
-                    empDao.desactivaEmpleado(id);
-                    bw.write("El Empleado desactivar es :" + empleado);
-                    PedidoDatos.flush(bw);
-                } else {
-                    bw.write("No se pudo eliminar el Empleado");
-                }
-//                    ProcesaEstados proc = new ProcesaEstados();
-//                    proc.gestionarEstados(bw, br);
+                    byte bandera = 1;
+                    while (bandera == 1) { 
+                        String estado = "";
+                        for (Empleado emp : listEmp) { //Recorro la lista para ver si el estado es activo o inactivo
+                            if (emp.isEstado()) {
+                                estado = "Activo";
+                            } else {
+                                estado = "Inactivo";
+                            }
+                            bw.write(emp.getIdEmpleado() + ". " + emp.getNombres() + " " + emp.getApellidos() + " -- Estado: " + estado);
+                            bw.newLine();
+                        }
+                        bw.write("Ingrese el [ID] del Empleado que desea inactivar:");
+                        PedidoDatos.flush(bw);
+                        byte id = Byte.parseByte(br.readLine());
+                        Empleado empleado = listEmp.get(id - 1);
+
+                        if (empleado != null) {
+                            empleado.setEstado(false); //Seteo el estado a false para ponerlo inactivo
+                            empDao.desactivaEmpleado(id);
+                            bw.write("El Empleado inactivado es :" + empleado.getNombres() + " " + empleado.getApellidos());
+                            PedidoDatos.flush(bw);
+                            bw.write("Desea desactivar otro empleado? Digite [1]. Si, [2]. No");
+                            PedidoDatos.flush(bw);
+                            bandera = Byte.parseByte(br.readLine());
+                        } else {
+                            bw.write("No se pudo inactivar el Empleado");
+                        }
+                    }
                     break;
 
                 case 3:
@@ -256,10 +246,10 @@ public class HiloAntiendeClientes extends Thread {
                         if (opcionMenuUser == 5) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
                             flagMenuUsuario = false;
                         }
-                        
+
                         procesarUsuarios.selecionarOpcionMenu(opcionMenuUser, bw, flagMenuUsuario, br); //enviamos la opcion elegida 
                         PedidoDatos.flush(bw);
-                        
+
                     }
                     System.out.println("Saliendo del Menu Gestionar Rol ... ");
                     break;
@@ -282,10 +272,10 @@ public class HiloAntiendeClientes extends Thread {
                         if (opcionMenu == 5) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
                             flagMenu = false;
                         }
-                        
+
                         procesarRoles.selecionarOpcionMenu(opcionMenu, bw, flagMenu, br); //enviamos la opcion elegida 
                         PedidoDatos.flush(bw);
-                        
+
                     }
                     System.out.println("Saliendo del Menu Gestionar Rol ... ");
                     break;
