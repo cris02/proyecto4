@@ -27,11 +27,10 @@ public class Validaciones {
         boolean dato;
         correo.toLowerCase();
 
-        if (!correo.matches("[\\w\\-.]+@{1}([\\w-]+\\.)+[\\w-\\.]+")) { //regla para validar el correo
-            System.out.println("\n\nNo es un correo valido, por favor ingrese un nuevo correo\n");
-            dato = false;
-        } else {
+        if (correo.matches("[\\w\\-.]+@{1}([\\w-]+\\.)+[\\w-\\.]+")) { //regla para validar el correo
             dato = true;
+        } else {
+            dato = false;
         }
         return dato;
     }
