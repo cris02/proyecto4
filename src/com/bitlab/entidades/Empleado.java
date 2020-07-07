@@ -71,6 +71,13 @@ public class Empleado {
         this.nombres = nombres;
         this.apellidos = apellidos;
     }
+    
+    public Empleado(int idEmpleado, String nombres, String apellidos, boolean estado) {
+        this.idEmpleado = idEmpleado;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.estado = estado;
+    }
 
     /*
          Metodos Getter y Setter

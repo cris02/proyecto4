@@ -210,26 +210,31 @@ public class HiloAntiendeClientes extends Thread {
 
                 case 2:
                     EmpleadoDAO empDao = new EmpleadoDAO();
-                    bw.write("Gestión de estados de empleados prueba. ");
+                    List<Empleado> listEmp = empDao.obtenerDatos();
+                    bw.write("Gestión de estados de empleados");
                     bw.newLine();
-                    bw.flush();
-                    ProcesaEstados proc = new ProcesaEstados();
-                    proc.obtenerEmpleadosActivosEInactivos(bw);
-                    bw.write("Ingrese el id del usuario que desea activar o desactivar");
+                    String estado ="";
+                for(Empleado emp : listEmp){
+                    if(emp.isEstado()) estado = "Activo";
+                    else estado = "Inactivo";
+                    bw.write(emp.getIdEmpleado() + ". " + emp.getNombres() + " " + emp.getApellidos()+" -- Estado: " + estado);
                     bw.newLine();
-                    short idUsuario = Short.parseShort(br.readLine());
-                    Empleado empActivarODesactivar = empDao.obtenerDatoID(idUsuario);
-                    bw.write("Ingrese el nuevo estado del empleado 1. Activo 2. Inactivo");
-                    bw.newLine();
-                    byte opcionAct = Byte.parseByte(br.readLine());
-                    if(opcionAct == 1){
-                        proc.activarDesactivarEmpleado(empActivarODesactivar, "activo");
-                    }else if(opcionAct == 2){
-                        proc.activarDesactivarEmpleado(empActivarODesactivar, "inactivo");
-                    }else{
-                        bw.write("Opcion de estado invalida");
-                    }
-                    
+                }
+                bw.write("Ingrese el [ID] del Empleado que desea inactivar:");
+                PedidoDatos.flush(bw);
+                byte id = Byte.parseByte(br.readLine());
+                Empleado empleado = listEmp.get(id);
+                
+                if (empleado != null) {
+                    empleado.setEstado(false);
+                    empDao.desactivaEmpleado(id);
+                    bw.write("El Empleado desactivar es :" + empleado);
+                    PedidoDatos.flush(bw);
+                } else {
+                    bw.write("No se pudo eliminar el Empleado");
+                }
+//                    ProcesaEstados proc = new ProcesaEstados();
+//                    proc.gestionarEstados(bw, br);
                     break;
 
                 case 3:

@@ -6,7 +6,6 @@
 package com.bitlab.dao;
 
 import com.bitlab.entidades.Empleado;
-import com.bitlab.utilidades.PedidoDatos;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -195,7 +194,7 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         Connection con = obtenerConexion();
 
         PreparedStatement ps = con.prepareStatement("UPDATE BIT_EMPLEADO SET EMP_ESTADO=? WHERE EMP_ID_PK=?");
-        ps.setShort(1, (short) 1);
+        ps.setBoolean(1, false);
         ps.setInt(2, (short) id);
         ps.executeUpdate();
         cerrarJDBCObjects(con, ps);
@@ -237,4 +236,36 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         }
         cerrarJDBCObjects(con, st, rs);
     }
+
+    @Override
+    public List<Empleado> obtenerDatos(int cantidadDatos) throws ClassNotFoundException, SQLException {
+        Connection con = obtenerConexion();
+        Statement st = con.createStatement();
+        st.setMaxRows(cantidadDatos);
+        ResultSet rs = st.executeQuery("SELECT EMP_ID_PK, EMP_NOMBRES, EMP_APELLIDOS, EMP_ESTADO FROM BIT_EMPLEADO"); //ejecutar el query
+
+        //crear una lista de objetos
+        List<Empleado> empleados = new ArrayList<>();
+        while (rs.next()) {
+            empleados.add(new Empleado(rs.getInt("EMP_ID_PK"), rs.getString("EMP_NOMBRES"), rs.getString("EMP_APELLIDOS"), rs.getBoolean("EMP_ESTADO"))); //agregar los datos a la lista
+        }
+        cerrarJDBCObjects(con, st, rs);
+        return empleados;
+    }
+
+
+    public void actualizarDatosID(int id) throws ClassNotFoundException, SQLException {
+        Connection con = obtenerConexion();
+        PreparedStatement ps = con.prepareStatement("UPDATE BIT_EMPLEADO SET EMP_ESTADO =? WHERE EMP_ID_PK=?");
+        ps.setBoolean(1, false);
+        ps.setInt(2, id);
+        ps.execute();
+        cerrarJDBCObjects(con, ps);
+    }
+    
+    
+
+    
+    
+    
 }
