@@ -151,16 +151,16 @@ public class HiloAntiendeClientes extends Thread {
                 linea = br.readLine(); //Lee lo que introduce el usuario
                 log.info("Esperando respuesta del usuario");
                 opcion = Integer.parseInt(linea);
-                if (opcion < 1 || opcion > 6) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
                     log.info("Usuario selecciono una opcion no existente");
                     bw.write("Elige una opcion correcta.");
                     PedidoDatos.flush(bw);
-                } else if (opcion == 6) { //Si ingresa la opcion 6 el usuario se desconectara
+                } else if (opcion == 5) { //Si ingresa la opcion 6 el usuario se desconectara
 //                        System.out.println(laIP + ": se ha desconectado...");
                     log.info("Usuario desconectado del sistema");
                     return;
                 }
-            } while (opcion < 1 || opcion > 6); //Mientras el usuario ingrese opcion del 1 al 6 se estara imprimiendo el menu principal
+            } while (opcion < 1 || opcion > 5); //Mientras el usuario ingrese opcion del 1 al 6 se estara imprimiendo el menu principal
 
             log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
             switch (opcion) {
@@ -178,9 +178,9 @@ public class HiloAntiendeClientes extends Thread {
                             bw.write("Ingrese una Opcion Valida -> ");
                             PedidoDatos.flush(bw);
                             opcionMenuDept = Byte.parseByte(br.readLine()); // capturamos la opcion elegida por el usuario
-                        } while (!((opcionMenuDept >= 1) && (opcionMenuDept <= 4)));
+                        } while (!((opcionMenuDept >= 1) && (opcionMenuDept <= 5)));
 
-                        if (opcionMenuDept == 4) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
+                        if (opcionMenuDept == 5) { // si la opcion es 5 cambiamos el estado de la bandera para retornar al menu principal
                             flagMenuDept = false;
                         }
 
@@ -336,15 +336,13 @@ public class HiloAntiendeClientes extends Thread {
                 switch (opcion) {
                     case 1:
                         List listaDatos;
-                        String datosSolicitar[] = {"Ingrese los nombre del empleado:", "Ingrese los apellidos del empleado", "Ingrese Genero",
-                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
-                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado", "Ingrese estado de empleado", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
+                        String datosSolicitar[] = {"Ingrese el nombre del empleado:", "Ingrese el apellido del empleado", "Ingrese Genero [M] o [F]",
+                            "Ingrese el documento de Identidad (DUI)", "Ingrese fecha de nacimiento formato [YYYY/MM/DD]", "Ingrese correo electronico del empleado", "Ingrese la direccion del empleado",
+                            "Ingrese telefono del empleado", "Ingrese NIF", "Ingrese comision", "Ingrese profesion del empleado","Ingrese el estado del empleado [1]. Activo, [2]. Inactivo", "Ingrese rol del empleado", "Ingrese el departamento del empleado"};
                         String tiposDatos[] = {"string", "string", "string", "string", "timestamp", "string", "string", "string", "string", "string", "string", "boolean", "int", "int"};
                         listaDatos = PedidoDatos.solicitarDatos(bw, br, datosSolicitar, tiposDatos);
 
                         Empleado emp1 = new Empleado(listaDatos.toArray());
-
-//                        Empleado emp = new Empleado(ID, nombre, apellido, genero, DUI, timestamp, correo, direccion, telefono, NIF, com, profesion, estado, rol, departamento);
                         daoEmp = new EmpleadoDAO();
                         daoEmp.insertarDato(emp1);
 

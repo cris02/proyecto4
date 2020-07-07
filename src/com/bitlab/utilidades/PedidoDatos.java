@@ -70,7 +70,7 @@ public class PedidoDatos {
                     lista.add(doble);
                     break;
                 case "boolean":
-                    Boolean boleano = Boolean.parseBoolean(respuesta);
+                    Boolean boleano = true;
                     lista.add(boleano);
                     break;
                 case "timestamp":
