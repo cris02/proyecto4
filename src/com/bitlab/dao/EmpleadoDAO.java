@@ -84,7 +84,6 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         ps.setDouble(10, entity.getComision());
         ps.setString(11, entity.getProfesion());
         ps.setBoolean(12, entity.isEstado());
-        /* ARREGLAR ESTO CREO QUE SERIA BOOLEAN*/
         ps.setInt(13, entity.getIdRol());
         ps.setInt(14, entity.getIdDepartamento());
     }
@@ -140,11 +139,7 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
             entity.setIdDepartamento(Integer.parseInt(datoActualizar));
         }
     }
-
-//    @Override
-//    public void desactivaEmpleado(short id, Empleado entity) throws ClassNotFoundException, SQLException {
-//        super.desactivaEmpleado(id, entity); //To change body of generated methods, choose Tools | Templates.
-//    }
+    
     @Override
     public List<Empleado> obtenerDatos(int cantidadDatos) throws ClassNotFoundException, SQLException {
         cantidadDatos = 1000;
@@ -201,22 +196,6 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         cerrarJDBCObjects(con, st, rs);
         return emp;
         
-        
-//        Connection con = obtenerConexion();
-//        Statement st = con.createStatement();
-//        System.out.println("SE GENERA QUERY PERSONALIZADO");
-//        ResultSet rs = st.executeQuery("SELECT EMP_ID_PK, EMP_NOMBRES, EMP_APELLIDOS, EMP_ESTADO FROM BIT_EMPLEADO WHERE EMP_ESTADO = 0"); //ejecutar el query
-//
-//        //crear una lista de objetos
-//        List<Empleado> empleados = new ArrayList<>();
-//        while (rs.next()) {
-//            empleados.add(new Empleado(
-//                    rs.getInt("EMP_ID_PK"),
-//                    rs.getString("EMP_NOMBRES"),
-//                    rs.getString("EMP_APELLIDOS")));
-//        }//agregar los datos a la lista
-//        cerrarJDBCObjects(con, st, rs);
-//        return empleados;
     }
 
     public void desactivaEmpleado(short id) throws ClassNotFoundException, SQLException {
@@ -266,22 +245,6 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         cerrarJDBCObjects(con, st, rs);
     }
 
-//    @Override
-//    public List<Empleado> obtenerDatos() throws ClassNotFoundException, SQLException {
-//        Connection con = obtenerConexion();
-//        Statement st = con.createStatement();
-//        st.setMaxRows(cantidadDatos);
-//        ResultSet rs = st.executeQuery("SELECT EMP_ID_PK, EMP_NOMBRES, EMP_APELLIDOS, EMP_ESTADO FROM BIT_EMPLEADO"); //ejecutar el query
-//
-//        //crear una lista de objetos
-//        List<Empleado> empleados = new ArrayList<>();
-//        while (rs.next()) {
-//            empleados.add(new Empleado(rs.getInt("EMP_ID_PK"), rs.getString("EMP_NOMBRES"), rs.getString("EMP_APELLIDOS"), rs.getBoolean("EMP_ESTADO"))); //agregar los datos a la lista
-//        }
-//        cerrarJDBCObjects(con, st, rs);
-//        return empleados;
-//    }
-
 
     public void actualizarDatosID(int id) throws ClassNotFoundException, SQLException {
         Connection con = obtenerConexion();
@@ -290,11 +253,5 @@ public class EmpleadoDAO extends ConexionDAO<Empleado> {
         ps.setInt(2, id);
         ps.execute();
         cerrarJDBCObjects(con, ps);
-    }
-    
-    
-
-    
-    
-    
+    } 
 }

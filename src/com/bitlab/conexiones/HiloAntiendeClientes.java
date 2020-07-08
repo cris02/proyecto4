@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -88,7 +89,7 @@ public class HiloAntiendeClientes extends Thread {
                     PedidoDatos.flush(bw);
                     String codigoIngresado = br.readLine();
                     if (codigo == Integer.parseInt(codigoIngresado)) {
-                        menuRRHH(br, bw);
+                    menuRRHH(br, bw);
                     } else {
                         bw.write("Codigo ingresado es invalido");
                     }
@@ -99,7 +100,6 @@ public class HiloAntiendeClientes extends Thread {
                 PedidoDatos.flush(bw);
             }
 
-            /* *Termina prueba */
         } catch (IOException ex) {
             Logger.getLogger(HiloAntiendeClientes.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -150,16 +150,21 @@ public class HiloAntiendeClientes extends Thread {
                 bw.flush();
                 linea = br.readLine(); //Lee lo que introduce el usuario
                 log.info("Esperando respuesta del usuario");
-                opcion = Integer.parseInt(linea);
-                if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
-                    log.info("Usuario selecciono una opcion no existente");
-                    bw.write("Elige una opcion correcta.");
+                if (Validaciones.validarIsNumeric(linea)) {
+                    opcion = Integer.parseInt(linea);
+                    if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                        log.info("Usuario selecciono una opcion no existente");
+                        bw.write("Elige una opcion correcta.");
+                        PedidoDatos.flush(bw);
+                    } else if (opcion == 5) { //Si ingresa la opcion 6 el usuario se desconectara
+                        log.info("Usuario desconectado del sistema");
+                        return;
+                    }
+                }else{
+                    bw.write("Ha ingreso un caracter invalido, por favor digite un numero");
                     PedidoDatos.flush(bw);
-                } else if (opcion == 5) { //Si ingresa la opcion 6 el usuario se desconectara
-//                        System.out.println(laIP + ": se ha desconectado...");
-                    log.info("Usuario desconectado del sistema");
-                    return;
                 }
+
             } while (opcion < 1 || opcion > 5); //Mientras el usuario ingrese opcion del 1 al 6 se estara imprimiendo el menu principal
 
             log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
@@ -285,7 +290,7 @@ public class HiloAntiendeClientes extends Thread {
         }
     }
 
-    public void menuRRHH(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException {
+    public void menuRRHH(BufferedReader br, BufferedWriter bw) throws IOException, ClassNotFoundException, SQLException, SocketException {
         EmpleadoDAO daoEmp = null;
         while (true) {
             try {
@@ -312,19 +317,23 @@ public class HiloAntiendeClientes extends Thread {
                 do {
                     bw.write("---");
                     bw.newLine();
-                    bw.flush();
                     linea = br.readLine(); //Lee lo que introduce el usuario
-                    log.info("Esperando respuesta del usuario");
-                    opcion = Integer.parseInt(linea);
-                    if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
-                        log.info("Usuario selecciono una opcion no existente");
-                        bw.write("Elige una opcion correcta.");
+                    if (Validaciones.validarIsNumeric(linea)) {
+                        log.info("Esperando respuesta del usuario");
+                        opcion = Integer.parseInt(linea);
+                        if (opcion < 1 || opcion > 5) { //Si el usuario ingresa una opcion que no esta en el menu vuelve a solicitar ingresar opcion
+                            log.info("Usuario selecciono una opcion no existente");
+                            bw.write("Elige una opcion correcta.");
+                            PedidoDatos.flush(bw);
+                        } else if (opcion == 6) { //Si ingresa la opcion 5 el usuario se desconectara
+                            log.info("Usuario desconectado del sistema");
+                            return;
+                        }
+                    } else {
+                        bw.write("Ha ingresado un caracter invalido, por favor digite un numero...");
                         PedidoDatos.flush(bw);
-                    } else if (opcion == 6) { //Si ingresa la opcion 5 el usuario se desconectara
-//                    System.out.println(laIP + ": se ha desconectado...");
-                        log.info("Usuario desconectado del sistema");
-                        return;
                     }
+
                 } while (opcion < 1 || opcion > 6); //Mientras el usuario ingrese opcion del 1 al 4 se estara imprimiendo el menu principal
 
                 log.info("Entrando al switch con las opciones principales"); //Si ingresa una opcion valida, se le llevara a la opcion deseada
@@ -354,6 +363,8 @@ public class HiloAntiendeClientes extends Thread {
                         daoEmp = new EmpleadoDAO();
                         daoEmp.mostrarEmpleadosActivos(bw);
                         bw.flush();
+                        bw.write("Elige una opcion correcta.");
+                        PedidoDatos.flush(bw);
                         String datoId = br.readLine();
                         int id = Integer.parseInt(datoId);
                         //ENVIAR EL ID 
@@ -368,7 +379,8 @@ public class HiloAntiendeClientes extends Thread {
                         PedidoDatos.flush(bw);
                         daoEmp = new EmpleadoDAO();
                         daoEmp.mostrarEmpleadosActivos(bw);
-                        bw.flush();
+                        bw.write("Elige el ID del empleado a eliminar.");
+                        PedidoDatos.flush(bw);
                         String idDesactivar = br.readLine();
                         daoEmp.desactivaEmpleado(Short.parseShort(idDesactivar));
                         break;
@@ -376,12 +388,10 @@ public class HiloAntiendeClientes extends Thread {
                     case 4:
                         bw.write("Lista de empleados activos de BitLab");
                         PedidoDatos.flush(bw);
-//                            List list=null;
                         daoEmp = new EmpleadoDAO();
                         daoEmp.mostrarEmpleadosActivos(bw);
                         bw.write("-------------------------------");
                         PedidoDatos.flush(bw);
-
                         break;
                     case 5:
                         bw.write("Visualización de pagos generados");

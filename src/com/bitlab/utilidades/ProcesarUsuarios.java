@@ -39,7 +39,7 @@ public class ProcesarUsuarios {
                 + "\t2) Eliminar Usuario \n "
                 + "\t3) Modificar Usuario \n "
                 + "\t4) Crear Nuevo Usuario \n "
-                + "\t5) Retornal al menu principal";
+                + "\t5) Retornar al menu principal";
         return menu;
     }
 
